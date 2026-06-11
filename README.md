@@ -17,6 +17,7 @@ tires and any custom counter.
 - Warning binary sensor per counter for automations (default threshold 90 %).
 - Localized in en, cs, de, es, fr, it, nl, pl and pt-BR; entity names and
   counter templates follow the Home Assistant UI language.
+- Bundled integration icon (shown by Home Assistant 2026.3 or newer).
 
 Requires Home Assistant 2025.3 or newer.
 

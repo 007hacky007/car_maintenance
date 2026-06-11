@@ -4,9 +4,9 @@
   "codeowners": ["@007hacky007"],
   "config_flow": true,
   "documentation": "https://github.com/007hacky007/car_maintenance",
-  "integration_type": "hub",
+  "integration_type": "device",
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/007hacky007/car_maintenance/issues",
   "requirements": [],
-  "version": "0.4.0"
+  "version": "0.4.1"
 }

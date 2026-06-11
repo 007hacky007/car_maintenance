@@ -14,7 +14,9 @@ actively maintained entity-progress-card (HACS).
 
 ## Architecture
 
-- Custom integration, domain `car_maintenance`, type `hub`, `iot_class: calculated`.
+- Custom integration, domain `car_maintenance`, type `device` (one config entry
+  = one vehicle = one device; makes the UI button say "Add device"),
+  `iot_class: calculated`.
 - Each vehicle = config entry. Each counter = config subentry (HA >= 2025.3).
 - No cloud, no polling API. Recalculation on odometer entity state change
   (`async_track_state_change_event`) and on a midnight tick

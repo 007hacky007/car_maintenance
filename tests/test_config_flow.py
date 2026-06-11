@@ -174,6 +174,31 @@ async def test_reconfigure_odometer_change_requires_confirmation(
     assert entry.data[CONF_ODOMETER_ENTITY] == OTHER_ODOMETER
 
 
+async def test_confirmation_warns_about_counters_above_new_reading(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    hass.states.async_set(OTHER_ODOMETER, "9000")
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    result = await _start_reconfigure(hass, entry)
+
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Test Car",
+            CONF_ODOMETER_ENTITY: OTHER_ODOMETER,
+            CONF_UNIT: UNIT_KM,
+            CONF_DIRECTION: DIRECTION_EXHAUSTED,
+        },
+    )
+    assert result["step_id"] == "confirm_odometer"
+    # counter's last service reading (10000) is above the new value (9000)
+    placeholders = result["description_placeholders"]
+    assert placeholders["below_counters"] == "Service inspection"
+    assert placeholders["old_reading"] == "12000"
+    assert placeholders["new_reading"] == "9000"
+
+
 async def test_reconfigure_same_odometer_skips_confirmation(
     hass: HomeAssistant,
 ) -> None:

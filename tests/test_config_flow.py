@@ -217,3 +217,47 @@ async def test_reconfigure_same_odometer_skips_confirmation(
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "reconfigure_successful"
     assert entry.title == "Renamed Car"
+
+
+async def test_unit_change_does_not_rescale_stored_km(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    result = await _start_reconfigure(hass, entry)
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Test Car",
+            CONF_ODOMETER_ENTITY: ODOMETER_ENTITY,
+            CONF_UNIT: "mi",
+            CONF_DIRECTION: DIRECTION_EXHAUSTED,
+        },
+    )
+    assert result["type"] is FlowResultType.ABORT
+    subentry = next(iter(entry.subentries.values()))
+    assert subentry.data["km_interval"] == 15000
+    assert subentry.data["last_odometer"] == 10000
+
+
+async def test_confirmation_converts_new_reading_units(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    # 7000 mi = 11265 km, above the counter's 10000 km -> no warning
+    hass.states.async_set(
+        OTHER_ODOMETER, "7000", {"unit_of_measurement": "mi"}
+    )
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    result = await _start_reconfigure(hass, entry)
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Test Car",
+            CONF_ODOMETER_ENTITY: OTHER_ODOMETER,
+            CONF_UNIT: UNIT_KM,
+            CONF_DIRECTION: DIRECTION_EXHAUSTED,
+        },
+    )
+    assert result["step_id"] == "confirm_odometer"
+    assert result["description_placeholders"]["below_counters"] == "-"

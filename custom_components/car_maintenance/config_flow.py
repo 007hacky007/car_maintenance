@@ -438,15 +438,23 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
         if new_state:
             try:
                 new_value = float(new_state.state)
+            except ValueError:
+                new_value = None
+            if new_value is not None:
+                unit = new_state.attributes.get("unit_of_measurement")
+                if unit in DistanceConverter.VALID_UNITS:
+                    new_km = DistanceConverter.convert(new_value, unit, "km")
+                else:
+                    new_km = _to_km(
+                        new_value, entry.data[CONF_UNIT]
+                    )
                 below = [
                     subentry.title
                     for subentry in entry.subentries.values()
                     if subentry.data.get(CONF_KM_INTERVAL)
                     and (subentry.data.get(CONF_LAST_ODOMETER) or 0)
-                    > new_value
+                    > new_km
                 ]
-            except ValueError:
-                pass
         return self.async_show_form(
             step_id="confirm_odometer",
             data_schema=vol.Schema({}),

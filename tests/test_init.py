@@ -135,6 +135,23 @@ async def test_entity_appearing_after_startup_clears_repair_issue(
     assert entry.runtime_data.data == 12000.0
 
 
+async def test_runtime_odometer_removal_raises_issue_and_clears_reading(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    await _setup(hass, entry)
+    assert entry.runtime_data.data == 12000.0
+
+    hass.states.async_remove(ODOMETER_ENTITY)
+    await hass.async_block_till_done()
+    assert entry.runtime_data.data is None
+    issue = ir.async_get(hass).async_get_issue(
+        DOMAIN, f"odometer_missing_{entry.entry_id}"
+    )
+    assert issue is not None
+
+
 async def test_remove_entry_deletes_persisted_reading(
     hass: HomeAssistant,
 ) -> None:

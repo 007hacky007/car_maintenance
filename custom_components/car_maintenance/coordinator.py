@@ -100,7 +100,24 @@ class VehicleCoordinator(DataUpdateCoordinator[float | None]):
 
     @callback
     def _odometer_changed(self, event: Event[EventStateChangedData]) -> None:
-        self._handle_state(event.data["new_state"])
+        new_state = event.data["new_state"]
+        if new_state is None:
+            # entity removed from the registry at runtime
+            ir.async_create_issue(
+                self.hass,
+                DOMAIN,
+                f"odometer_missing_{self.entry.entry_id}",
+                is_fixable=False,
+                severity=ir.IssueSeverity.WARNING,
+                translation_key="odometer_missing",
+                translation_placeholders={
+                    "entity_id": self.entry.data[CONF_ODOMETER_ENTITY],
+                    "vehicle": self.entry.title,
+                },
+            )
+            self.async_set_updated_data(None)
+            return
+        self._handle_state(new_state)
 
     @callback
     def _handle_state(self, state: State | None) -> None:

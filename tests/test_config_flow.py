@@ -76,3 +76,16 @@ async def test_user_flow_rejects_non_numeric_odometer(
     )
     assert result["type"] is FlowResultType.FORM
     assert result["errors"] == {CONF_ODOMETER_ENTITY: "odometer_not_numeric"}
+
+    # the flow recovers once the entity reports a numeric state
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Octavia",
+            CONF_ODOMETER_ENTITY: ODOMETER_ENTITY,
+            CONF_UNIT: UNIT_KM,
+            CONF_DIRECTION: DIRECTION_EXHAUSTED,
+        },
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY

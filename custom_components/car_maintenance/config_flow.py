@@ -43,15 +43,9 @@ def _vehicle_schema(hass: HomeAssistant, defaults: dict[str, Any]) -> vol.Schema
     schema: dict[Any, Any] = {
         vol.Required(CONF_NAME, default=defaults.get(CONF_NAME, "")): str,
     }
-    odometer_key = (
-        vol.Optional(
-            CONF_ODOMETER_ENTITY,
-            description={
-                "suggested_value": defaults.get(CONF_ODOMETER_ENTITY)
-            },
-        )
-        if defaults.get(CONF_ODOMETER_ENTITY)
-        else vol.Optional(CONF_ODOMETER_ENTITY)
+    odometer_key = vol.Optional(
+        CONF_ODOMETER_ENTITY,
+        description={"suggested_value": defaults.get(CONF_ODOMETER_ENTITY)},
     )
     schema[odometer_key] = selector.EntitySelector(
         selector.EntitySelectorConfig(domain="sensor")

@@ -27,6 +27,36 @@
       "confirm_odometer": {
         "title": "Potvrdit zmenu odometru",
         "description": "Aktualni stav odometru: {old_reading}. Stav nove entity: {new_reading}. Ulozene hodnoty poslednich servisu zustavaji. Pocitadla s poslednim servisem nad novou hodnotou: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Pocitadla udrzby",
+        "description": "Pridejte vozidlu jedno nebo vice pocitadel udrzby hned, nebo dokoncete nastaveni a pridejte je pozdeji.",
+        "menu_options": {
+          "add_counter": "Pridat pocitadlo",
+          "finish": "Dokoncit nastaveni"
+        }
+      },
+      "add_counter": {
+        "title": "Pridat pocitadlo",
+        "data": {
+          "template": "Sablona"
+        }
+      },
+      "counter_details": {
+        "title": "Detaily pocitadla",
+        "data": {
+          "name": "Nazev",
+          "time_value": "Casovy interval",
+          "time_unit": "Jednotka casoveho intervalu",
+          "km_interval": "Interval vzdalenosti",
+          "last_date": "Datum posledniho provedeni",
+          "last_odometer": "Stav odometru pri poslednim provedeni",
+          "threshold": "Prah upozorneni (%)"
+        },
+        "data_description": {
+          "time_value": "Nechte prazdne pro pocitadlo jen podle vzdalenosti.",
+          "km_interval": "Nechte prazdne pro pocitadlo jen podle casu. Zadava se v jednotce vozidla."
+        }
       }
     },
     "error": {
@@ -35,6 +65,9 @@
     },
     "abort": {
       "reconfigure_successful": "Vozidlo upraveno."
+    },
+    "create_entry": {
+      "default": "Vozidlo vytvoreno. Dalsi pocitadla nebo dalsi vozidlo muzete kdykoli pridat v Nastaveni > Zarizeni a sluzby > Car Maintenance (Pridat pocitadlo / Pridat zaznam)."
     }
   },
   "config_subentries": {

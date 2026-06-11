@@ -11,6 +11,7 @@ from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
     ConfigFlowResult,
+    ConfigSubentryData,
     ConfigSubentryFlow,
     SubentryFlowResult,
 )
@@ -185,6 +186,84 @@ def _counter_schema(
     return vol.Schema(schema)
 
 
+def _counter_data(user_input: dict[str, Any], unit: str) -> dict[str, Any]:
+    """Convert counter form input to canonical subentry data."""
+    time_value = user_input.get(CONF_TIME_VALUE)
+    km_interval = _to_km(user_input.get(CONF_KM_INTERVAL), unit)
+    return {
+        CONF_TIME_VALUE: int(time_value) if time_value else None,
+        CONF_TIME_UNIT: user_input[CONF_TIME_UNIT] if time_value else None,
+        CONF_KM_INTERVAL: km_interval,
+        CONF_LAST_DATE: user_input[CONF_LAST_DATE],
+        CONF_LAST_ODOMETER: (
+            _to_km(user_input.get(CONF_LAST_ODOMETER), unit)
+            if km_interval
+            else None
+        ),
+        CONF_THRESHOLD: int(user_input[CONF_THRESHOLD]),
+    }
+
+
+def _template_defaults(
+    template_key: str,
+    *,
+    has_odometer: bool,
+    unit: str,
+    current_odometer: float | None,
+) -> dict[str, Any]:
+    """Prefill values for the counter details form from a template."""
+    template = TEMPLATES[template_key]
+    defaults: dict[str, Any] = {
+        CONF_NAME: template["name"],
+        CONF_THRESHOLD: DEFAULT_THRESHOLD,
+    }
+    if template["time"]:
+        defaults[CONF_TIME_VALUE] = template["time"][0]
+        defaults[CONF_TIME_UNIT] = template["time"][1]
+    if template["km"] and has_odometer:
+        defaults[CONF_KM_INTERVAL] = _from_km(template["km"], unit)
+        defaults[CONF_LAST_ODOMETER] = current_odometer
+    return defaults
+
+
+def _template_schema() -> vol.Schema:
+    """Schema for the counter template picker."""
+    return vol.Schema(
+        {
+            vol.Required(
+                CONF_TEMPLATE, default="service"
+            ): selector.SelectSelector(
+                selector.SelectSelectorConfig(
+                    options=list(TEMPLATES),
+                    translation_key="template",
+                    mode=selector.SelectSelectorMode.DROPDOWN,
+                )
+            )
+        }
+    )
+
+
+def _entity_reading(
+    hass: HomeAssistant, entity_id: str | None, unit: str
+) -> float | None:
+    """Current reading of an odometer entity in the vehicle unit."""
+    if not entity_id:
+        return None
+    state = hass.states.get(entity_id)
+    if state is None:
+        return None
+    try:
+        value = float(state.state)
+    except ValueError:
+        return None
+    state_unit = state.attributes.get("unit_of_measurement")
+    if state_unit in DistanceConverter.VALID_UNITS:
+        km = DistanceConverter.convert(value, state_unit, "km")
+    else:
+        km = _to_km(value, unit)
+    return _from_km(km, unit)
+
+
 def _validate_counter(user_input: dict[str, Any]) -> dict[str, str]:
     errors: dict[str, str] = {}
     if not user_input.get(CONF_TIME_VALUE) and not user_input.get(
@@ -222,20 +301,7 @@ class CounterSubentryFlow(ConfigSubentryFlow):
             self._template = user_input[CONF_TEMPLATE]
             return await self.async_step_details()
         return self.async_show_form(
-            step_id="user",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(
-                        CONF_TEMPLATE, default="service"
-                    ): selector.SelectSelector(
-                        selector.SelectSelectorConfig(
-                            options=list(TEMPLATES),
-                            translation_key="template",
-                            mode=selector.SelectSelectorMode.DROPDOWN,
-                        )
-                    )
-                }
-            ),
+            step_id="user", data_schema=_template_schema()
         )
 
     async def async_step_details(
@@ -248,23 +314,16 @@ class CounterSubentryFlow(ConfigSubentryFlow):
             if not errors:
                 return self.async_create_entry(
                     title=user_input[CONF_NAME],
-                    data=self._counter_data(user_input),
+                    data=_counter_data(user_input, self._unit),
                 )
             defaults = dict(user_input)
         else:
-            template = TEMPLATES[self._template]
-            defaults = {
-                CONF_NAME: template["name"],
-                CONF_THRESHOLD: DEFAULT_THRESHOLD,
-            }
-            if template["time"]:
-                defaults[CONF_TIME_VALUE] = template["time"][0]
-                defaults[CONF_TIME_UNIT] = template["time"][1]
-            if template["km"] and self._has_odometer:
-                defaults[CONF_KM_INTERVAL] = _from_km(
-                    template["km"], self._unit
-                )
-                defaults[CONF_LAST_ODOMETER] = self._current_odometer()
+            defaults = _template_defaults(
+                self._template,
+                has_odometer=self._has_odometer,
+                unit=self._unit,
+                current_odometer=self._current_odometer(),
+            )
         return self.async_show_form(
             step_id="details",
             data_schema=_counter_schema(
@@ -286,7 +345,7 @@ class CounterSubentryFlow(ConfigSubentryFlow):
                     self._vehicle,
                     subentry,
                     title=user_input[CONF_NAME],
-                    data=self._counter_data(user_input),
+                    data=_counter_data(user_input, self._unit),
                 )
             defaults = dict(user_input)
         else:
@@ -319,23 +378,6 @@ class CounterSubentryFlow(ConfigSubentryFlow):
             return None
         return _from_km(coordinator.data, self._unit)
 
-    def _counter_data(self, user_input: dict[str, Any]) -> dict[str, Any]:
-        """Convert form input to canonical subentry data."""
-        time_value = user_input.get(CONF_TIME_VALUE)
-        km_interval = _to_km(user_input.get(CONF_KM_INTERVAL), self._unit)
-        return {
-            CONF_TIME_VALUE: int(time_value) if time_value else None,
-            CONF_TIME_UNIT: user_input[CONF_TIME_UNIT] if time_value else None,
-            CONF_KM_INTERVAL: km_interval,
-            CONF_LAST_DATE: user_input[CONF_LAST_DATE],
-            CONF_LAST_ODOMETER: (
-                _to_km(user_input.get(CONF_LAST_ODOMETER), self._unit)
-                if km_interval
-                else None
-            ),
-            CONF_THRESHOLD: int(user_input[CONF_THRESHOLD]),
-        }
-
 
 class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle the vehicle config flow."""
@@ -343,6 +385,12 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     _pending_input: dict[str, Any]
+    _vehicle_input: dict[str, Any]
+    _counter_template: str = "custom"
+
+    def __init__(self) -> None:
+        """Initialize the flow."""
+        self._subentries: list[ConfigSubentryData] = []
 
     @classmethod
     @callback
@@ -362,18 +410,83 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
             if error := _odometer_error(self.hass, odometer):
                 errors[CONF_ODOMETER_ENTITY] = error
             else:
-                return self.async_create_entry(
-                    title=user_input[CONF_NAME],
-                    data={
-                        CONF_ODOMETER_ENTITY: odometer,
-                        CONF_UNIT: user_input[CONF_UNIT],
-                        CONF_DIRECTION: user_input[CONF_DIRECTION],
-                    },
-                )
+                self._vehicle_input = user_input
+                return await self.async_step_counters_menu()
         return self.async_show_form(
             step_id="user",
             data_schema=_vehicle_schema(self.hass, user_input or {}),
             errors=errors,
+        )
+
+    async def async_step_counters_menu(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Offer adding counters before the vehicle is created."""
+        return self.async_show_menu(
+            step_id="counters_menu",
+            menu_options=["add_counter", "finish"],
+        )
+
+    async def async_step_add_counter(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Pick a counter template during initial setup."""
+        if user_input is not None:
+            self._counter_template = user_input[CONF_TEMPLATE]
+            return await self.async_step_counter_details()
+        return self.async_show_form(
+            step_id="add_counter", data_schema=_template_schema()
+        )
+
+    async def async_step_counter_details(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Enter counter details during initial setup."""
+        unit = self._vehicle_input[CONF_UNIT]
+        odometer = self._vehicle_input.get(CONF_ODOMETER_ENTITY)
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            errors = _validate_counter(user_input)
+            if not errors:
+                self._subentries.append(
+                    ConfigSubentryData(
+                        data=_counter_data(user_input, unit),
+                        subentry_type=SUBENTRY_TYPE_COUNTER,
+                        title=user_input[CONF_NAME],
+                        unique_id=None,
+                    )
+                )
+                return await self.async_step_counters_menu()
+            defaults = dict(user_input)
+        else:
+            defaults = _template_defaults(
+                self._counter_template,
+                has_odometer=odometer is not None,
+                unit=unit,
+                current_odometer=_entity_reading(self.hass, odometer, unit),
+            )
+        return self.async_show_form(
+            step_id="counter_details",
+            data_schema=_counter_schema(
+                has_odometer=odometer is not None, defaults=defaults
+            ),
+            errors=errors,
+        )
+
+    async def async_step_finish(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Create the vehicle entry with the collected counters."""
+        return self.async_create_entry(
+            title=self._vehicle_input[CONF_NAME],
+            data={
+                CONF_ODOMETER_ENTITY: self._vehicle_input.get(
+                    CONF_ODOMETER_ENTITY
+                ),
+                CONF_UNIT: self._vehicle_input[CONF_UNIT],
+                CONF_DIRECTION: self._vehicle_input[CONF_DIRECTION],
+            },
+            subentries=self._subentries,
         )
 
     async def async_step_reconfigure(

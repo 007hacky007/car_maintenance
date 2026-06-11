@@ -7,7 +7,14 @@ from homeassistant.data_entry_flow import FlowResultType
 
 from custom_components.car_maintenance.const import (
     CONF_DIRECTION,
+    CONF_KM_INTERVAL,
+    CONF_LAST_DATE,
+    CONF_LAST_ODOMETER,
     CONF_ODOMETER_ENTITY,
+    CONF_TEMPLATE,
+    CONF_THRESHOLD,
+    CONF_TIME_UNIT,
+    CONF_TIME_VALUE,
     CONF_UNIT,
     DIRECTION_EXHAUSTED,
     DOMAIN,
@@ -17,6 +24,20 @@ from custom_components.car_maintenance.const import (
 from .conftest import ODOMETER_ENTITY, make_counter_subentry, make_vehicle_entry
 
 OTHER_ODOMETER = "sensor.other_odometer"
+
+VEHICLE_INPUT = {
+    CONF_NAME: "Octavia",
+    CONF_ODOMETER_ENTITY: ODOMETER_ENTITY,
+    CONF_UNIT: UNIT_KM,
+    CONF_DIRECTION: DIRECTION_EXHAUSTED,
+}
+
+
+async def _finish(hass: HomeAssistant, result):
+    """Select 'finish' in the counters menu."""
+    return await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"next_step_id": "finish"}
+    )
 
 
 async def _start_reconfigure(hass: HomeAssistant, entry):
@@ -34,14 +55,12 @@ async def test_user_flow_with_odometer(hass: HomeAssistant) -> None:
     assert result["type"] is FlowResultType.FORM
 
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"],
-        {
-            CONF_NAME: "Octavia",
-            CONF_ODOMETER_ENTITY: ODOMETER_ENTITY,
-            CONF_UNIT: UNIT_KM,
-            CONF_DIRECTION: DIRECTION_EXHAUSTED,
-        },
+        result["flow_id"], VEHICLE_INPUT
     )
+    assert result["type"] is FlowResultType.MENU
+    assert result["step_id"] == "counters_menu"
+
+    result = await _finish(hass, result)
     assert result["type"] is FlowResultType.CREATE_ENTRY
     assert result["title"] == "Octavia"
     assert result["data"] == {
@@ -49,6 +68,7 @@ async def test_user_flow_with_odometer(hass: HomeAssistant) -> None:
         CONF_UNIT: UNIT_KM,
         CONF_DIRECTION: DIRECTION_EXHAUSTED,
     }
+    assert result["result"].subentries == {}
 
 
 async def test_user_flow_without_odometer(hass: HomeAssistant) -> None:
@@ -63,8 +83,105 @@ async def test_user_flow_without_odometer(hass: HomeAssistant) -> None:
             CONF_DIRECTION: DIRECTION_EXHAUSTED,
         },
     )
+    result = await _finish(hass, result)
     assert result["type"] is FlowResultType.CREATE_ENTRY
     assert result["data"][CONF_ODOMETER_ENTITY] is None
+
+
+async def test_user_flow_adds_counters_during_setup(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": SOURCE_USER}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], VEHICLE_INPUT
+    )
+    assert result["step_id"] == "counters_menu"
+
+    # first counter
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"next_step_id": "add_counter"}
+    )
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "add_counter"
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_TEMPLATE: "service"}
+    )
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "counter_details"
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Service inspection",
+            CONF_TIME_VALUE: 1,
+            CONF_TIME_UNIT: "years",
+            CONF_KM_INTERVAL: 15000,
+            CONF_LAST_DATE: "2026-01-01",
+            CONF_LAST_ODOMETER: 10000,
+            CONF_THRESHOLD: 90,
+        },
+    )
+    assert result["type"] is FlowResultType.MENU
+
+    # second counter, time only
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"next_step_id": "add_counter"}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_TEMPLATE: "vehicle_inspection"}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "STK",
+            CONF_TIME_VALUE: 2,
+            CONF_TIME_UNIT: "years",
+            CONF_LAST_DATE: "2026-01-01",
+            CONF_THRESHOLD: 90,
+        },
+    )
+    assert result["type"] is FlowResultType.MENU
+
+    result = await _finish(hass, result)
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    entry = result["result"]
+    subentries = list(entry.subentries.values())
+    assert len(subentries) == 2
+    assert subentries[0].title == "Service inspection"
+    assert subentries[0].data[CONF_KM_INTERVAL] == 15000
+    assert subentries[0].data[CONF_LAST_ODOMETER] == 10000
+    assert subentries[1].title == "STK"
+    assert subentries[1].data[CONF_KM_INTERVAL] is None
+    await hass.async_block_till_done()
+
+
+async def test_setup_counter_details_validates(hass: HomeAssistant) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": SOURCE_USER}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], VEHICLE_INPUT
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"next_step_id": "add_counter"}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_TEMPLATE: "custom"}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Broken",
+            CONF_LAST_DATE: "2026-01-01",
+            CONF_THRESHOLD: 90,
+        },
+    )
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "counter_details"
+    assert result["errors"] == {"base": "no_interval"}
 
 
 async def test_user_flow_rejects_non_numeric_odometer(
@@ -97,6 +214,8 @@ async def test_user_flow_rejects_non_numeric_odometer(
             CONF_DIRECTION: DIRECTION_EXHAUSTED,
         },
     )
+    assert result["type"] is FlowResultType.MENU
+    result = await _finish(hass, result)
     assert result["type"] is FlowResultType.CREATE_ENTRY
 
 

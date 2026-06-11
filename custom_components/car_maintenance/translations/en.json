@@ -27,6 +27,36 @@
       "confirm_odometer": {
         "title": "Confirm odometer change",
         "description": "Current odometer reading: {old_reading}. New entity reading: {new_reading}. Stored values at last service are kept. Counters with a last service reading above the new value: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Maintenance counters",
+        "description": "Add one or more maintenance counters to the vehicle now, or finish and add them later.",
+        "menu_options": {
+          "add_counter": "Add a counter",
+          "finish": "Finish setup"
+        }
+      },
+      "add_counter": {
+        "title": "Add counter",
+        "data": {
+          "template": "Template"
+        }
+      },
+      "counter_details": {
+        "title": "Counter details",
+        "data": {
+          "name": "Name",
+          "time_value": "Time interval",
+          "time_unit": "Time interval unit",
+          "km_interval": "Distance interval",
+          "last_date": "Date of last service",
+          "last_odometer": "Odometer at last service",
+          "threshold": "Warning threshold (%)"
+        },
+        "data_description": {
+          "time_value": "Leave empty for a distance-only counter.",
+          "km_interval": "Leave empty for a time-only counter. Entered in the vehicle's distance unit."
+        }
       }
     },
     "error": {
@@ -35,6 +65,9 @@
     },
     "abort": {
       "reconfigure_successful": "Vehicle reconfigured."
+    },
+    "create_entry": {
+      "default": "Vehicle created. You can add more counters or another vehicle anytime in Settings > Devices & services > Car Maintenance (Add counter / Add entry)."
     }
   },
   "config_subentries": {

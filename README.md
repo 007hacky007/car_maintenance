@@ -1,5 +1,7 @@
 # Car Maintenance for Home Assistant
 
+<img src="assets/icon.png" alt="Car Maintenance icon" width="128" align="right"/>
+
 Track vehicle maintenance with progress sensors: service inspections by time
 and/or driven distance, vehicle inspection (STK), highway vignette, oil, brakes,
 tires and any custom counter.

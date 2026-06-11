@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Aggiungi veicolo",
+        "data": {
+          "name": "Nome del veicolo",
+          "odometer_entity": "Entità contachilometri (opzionale)",
+          "unit": "Unità di distanza",
+          "direction": "Direzione della barra di avanzamento"
+        },
+        "data_description": {
+          "odometer_entity": "Sensore con la distanza totale percorsa. Lascia vuoto per monitorare i contatori solo in base al tempo.",
+          "direction": "Trascorso: da 0 a 100 con l'avvicinarsi della scadenza. Rimanente: da 100 a 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Riconfigura veicolo",
+        "description": "Contatori con intervallo di distanza: {counters}",
+        "data": {
+          "name": "Nome del veicolo",
+          "odometer_entity": "Entità contachilometri (opzionale)",
+          "unit": "Unità di distanza",
+          "direction": "Direzione della barra di avanzamento"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Conferma modifica del contachilometri",
+        "description": "Lettura attuale del contachilometri: {old_reading}. Lettura della nuova entità: {new_reading}. I valori salvati dell'ultimo intervento vengono mantenuti. Contatori con una lettura dell'ultimo intervento superiore al nuovo valore: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Contatori di manutenzione",
+        "description": "Aggiungi ora uno o più contatori di manutenzione al veicolo, oppure concludi e aggiungili in seguito.",
+        "menu_options": {
+          "add_counter": "Aggiungi un contatore",
+          "finish": "Completa la configurazione"
+        }
+      },
+      "add_counter": {
+        "title": "Aggiungi contatore",
+        "data": {
+          "template": "Modello"
+        }
+      },
+      "counter_details": {
+        "title": "Dettagli del contatore",
+        "data": {
+          "name": "Nome",
+          "time_value": "Intervallo di tempo",
+          "time_unit": "Unità dell'intervallo di tempo",
+          "km_interval": "Intervallo di distanza",
+          "last_date": "Data dell'ultimo intervento",
+          "last_odometer": "Contachilometri all'ultimo intervento",
+          "threshold": "Soglia di avviso (%)"
+        },
+        "data_description": {
+          "time_value": "Lascia vuoto per un contatore basato solo sulla distanza.",
+          "km_interval": "Lascia vuoto per un contatore basato solo sul tempo. Da inserire nell'unità di distanza del veicolo."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "L'entità selezionata non ha uno stato numerico.",
+      "odometer_required_by_counters": "Esistono contatori con un intervallo di distanza. Modificali o eliminali prima."
+    },
+    "abort": {
+      "reconfigure_successful": "Veicolo riconfigurato."
+    },
+    "create_entry": {
+      "default": "Veicolo creato. Puoi aggiungere altri contatori o un altro veicolo in qualsiasi momento in Impostazioni > Dispositivi e servizi > Car Maintenance (Aggiungi contatore / Aggiungi voce)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Contatore",
+      "initiate_flow": {
+        "user": "Aggiungi contatore"
+      },
+      "entry_type": "Contatore di manutenzione",
+      "step": {
+        "user": {
+          "title": "Aggiungi contatore",
+          "data": {
+            "template": "Modello"
+          }
+        },
+        "details": {
+          "title": "Dettagli del contatore",
+          "data": {
+            "name": "Nome",
+            "time_value": "Intervallo di tempo",
+            "time_unit": "Unità dell'intervallo di tempo",
+            "km_interval": "Intervallo di distanza",
+            "last_date": "Data dell'ultimo intervento",
+            "last_odometer": "Contachilometri all'ultimo intervento",
+            "threshold": "Soglia di avviso (%)"
+          },
+          "data_description": {
+            "time_value": "Lascia vuoto per un contatore basato solo sulla distanza.",
+            "km_interval": "Lascia vuoto per un contatore basato solo sul tempo. Da inserire nell'unità di distanza del veicolo."
+          }
+        },
+        "reconfigure": {
+          "title": "Modifica contatore",
+          "data": {
+            "name": "Nome",
+            "time_value": "Intervallo di tempo",
+            "time_unit": "Unità dell'intervallo di tempo",
+            "km_interval": "Intervallo di distanza",
+            "last_date": "Data dell'ultimo intervento",
+            "last_odometer": "Contachilometri all'ultimo intervento",
+            "threshold": "Soglia di avviso (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Imposta un intervallo di tempo, un intervallo di distanza o entrambi.",
+        "future_date": "La data dell'ultimo intervento non può essere nel futuro."
+      },
+      "abort": {
+        "reconfigure_successful": "Contatore aggiornato."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Chilometri",
+        "mi": "Miglia"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Trascorso (da 0 a 100)",
+        "remaining": "Rimanente (da 100 a 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Giorni",
+        "months": "Mesi",
+        "years": "Anni"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Tagliando",
+        "vehicle_inspection": "Revisione",
+        "vignette": "Vignetta autostradale",
+        "oil": "Cambio olio",
+        "brake_fluid": "Liquido freni",
+        "coolant": "Liquido di raffreddamento",
+        "timing_belt": "Cinghia di distribuzione",
+        "battery": "Batteria",
+        "insurance": "Assicurazione",
+        "tires": "Cambio gomme (stagionale)",
+        "first_aid_kit": "Kit di pronto soccorso",
+        "custom": "Personalizzato"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Nessuna lettura del contachilometri disponibile, il contatore non è stato azzerato."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Entità contachilometri mancante",
+      "description": "L'entità contachilometri {entity_id} del veicolo {vehicle} non è disponibile. I contatori basati sulla distanza continuano a usare l'ultima lettura nota. Riconfigura il veicolo per risolvere il problema."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} avanzamento"
+      },
+      "remaining_days": {
+        "name": "{counter} giorni rimanenti"
+      },
+      "due_date": {
+        "name": "{counter} data di scadenza"
+      },
+      "remaining_distance": {
+        "name": "{counter} distanza rimanente"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} avviso"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} fatto"
+      }
+    }
+  }
+}

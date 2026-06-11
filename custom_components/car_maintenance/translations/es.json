@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Añadir vehículo",
+        "data": {
+          "name": "Nombre del vehículo",
+          "odometer_entity": "Entidad del odómetro (opcional)",
+          "unit": "Unidad de distancia",
+          "direction": "Dirección de la barra de progreso"
+        },
+        "data_description": {
+          "odometer_entity": "Sensor con la distancia total recorrida. Déjelo vacío para seguir los contadores solo por tiempo.",
+          "direction": "Consumido: de 0 a 100 a medida que se acerca el plazo. Restante: de 100 a 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigurar vehículo",
+        "description": "Contadores con intervalo de distancia: {counters}",
+        "data": {
+          "name": "Nombre del vehículo",
+          "odometer_entity": "Entidad del odómetro (opcional)",
+          "unit": "Unidad de distancia",
+          "direction": "Dirección de la barra de progreso"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Confirmar cambio de odómetro",
+        "description": "Lectura actual del odómetro: {old_reading}. Lectura de la nueva entidad: {new_reading}. Los valores guardados del último mantenimiento se conservan. Contadores con una lectura del último mantenimiento superior al nuevo valor: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Contadores de mantenimiento",
+        "description": "Añada ahora uno o más contadores de mantenimiento al vehículo, o finalice y añádalos más tarde.",
+        "menu_options": {
+          "add_counter": "Añadir un contador",
+          "finish": "Finalizar configuración"
+        }
+      },
+      "add_counter": {
+        "title": "Añadir contador",
+        "data": {
+          "template": "Plantilla"
+        }
+      },
+      "counter_details": {
+        "title": "Detalles del contador",
+        "data": {
+          "name": "Nombre",
+          "time_value": "Intervalo de tiempo",
+          "time_unit": "Unidad del intervalo de tiempo",
+          "km_interval": "Intervalo de distancia",
+          "last_date": "Fecha del último mantenimiento",
+          "last_odometer": "Odómetro en el último mantenimiento",
+          "threshold": "Umbral de aviso (%)"
+        },
+        "data_description": {
+          "time_value": "Déjelo vacío para un contador solo por distancia.",
+          "km_interval": "Déjelo vacío para un contador solo por tiempo. Se introduce en la unidad de distancia del vehículo."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "La entidad seleccionada no tiene un estado numérico.",
+      "odometer_required_by_counters": "Existen contadores con intervalo de distancia. Edítelos o elimínelos primero."
+    },
+    "abort": {
+      "reconfigure_successful": "Vehículo reconfigurado."
+    },
+    "create_entry": {
+      "default": "Vehículo creado. Puede añadir más contadores u otro vehículo en cualquier momento en Ajustes > Dispositivos y servicios > Car Maintenance (Añadir contador / Añadir entrada)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Contador",
+      "initiate_flow": {
+        "user": "Añadir contador"
+      },
+      "entry_type": "Contador de mantenimiento",
+      "step": {
+        "user": {
+          "title": "Añadir contador",
+          "data": {
+            "template": "Plantilla"
+          }
+        },
+        "details": {
+          "title": "Detalles del contador",
+          "data": {
+            "name": "Nombre",
+            "time_value": "Intervalo de tiempo",
+            "time_unit": "Unidad del intervalo de tiempo",
+            "km_interval": "Intervalo de distancia",
+            "last_date": "Fecha del último mantenimiento",
+            "last_odometer": "Odómetro en el último mantenimiento",
+            "threshold": "Umbral de aviso (%)"
+          },
+          "data_description": {
+            "time_value": "Déjelo vacío para un contador solo por distancia.",
+            "km_interval": "Déjelo vacío para un contador solo por tiempo. Se introduce en la unidad de distancia del vehículo."
+          }
+        },
+        "reconfigure": {
+          "title": "Editar contador",
+          "data": {
+            "name": "Nombre",
+            "time_value": "Intervalo de tiempo",
+            "time_unit": "Unidad del intervalo de tiempo",
+            "km_interval": "Intervalo de distancia",
+            "last_date": "Fecha del último mantenimiento",
+            "last_odometer": "Odómetro en el último mantenimiento",
+            "threshold": "Umbral de aviso (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Establezca un intervalo de tiempo, un intervalo de distancia o ambos.",
+        "future_date": "La fecha del último mantenimiento no puede estar en el futuro."
+      },
+      "abort": {
+        "reconfigure_successful": "Contador actualizado."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilómetros",
+        "mi": "Millas"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Consumido (0 a 100)",
+        "remaining": "Restante (100 a 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Días",
+        "months": "Meses",
+        "years": "Años"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Revisión de mantenimiento",
+        "vehicle_inspection": "ITV",
+        "vignette": "Viñeta de autopista",
+        "oil": "Cambio de aceite",
+        "brake_fluid": "Líquido de frenos",
+        "coolant": "Refrigerante",
+        "timing_belt": "Correa de distribución",
+        "battery": "Batería",
+        "insurance": "Seguro",
+        "tires": "Cambio de neumáticos (estacional)",
+        "first_aid_kit": "Botiquín",
+        "custom": "Personalizado"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "No hay ninguna lectura del odómetro disponible, el contador no se ha reiniciado."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Falta la entidad del odómetro",
+      "description": "La entidad del odómetro {entity_id} del vehículo {vehicle} no está disponible. Los contadores por distancia siguen usando la última lectura conocida. Reconfigure el vehículo para solucionarlo."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} progreso"
+      },
+      "remaining_days": {
+        "name": "{counter} días restantes"
+      },
+      "due_date": {
+        "name": "{counter} fecha de vencimiento"
+      },
+      "remaining_distance": {
+        "name": "{counter} distancia restante"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} aviso"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} hecho"
+      }
+    }
+  }
+}

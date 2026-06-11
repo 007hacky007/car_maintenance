@@ -27,6 +27,8 @@ class CounterEntity(CoordinatorEntity[VehicleCoordinator]):
         self._attr_unique_id = (
             f"{coordinator.entry.entry_id}-{subentry.subentry_id}-{kind}"
         )
+        self._attr_translation_key = kind
+        self._attr_translation_placeholders = {"counter": subentry.title}
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, coordinator.entry.entry_id)},
             name=coordinator.entry.title,

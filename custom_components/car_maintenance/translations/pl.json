@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Dodaj pojazd",
+        "data": {
+          "name": "Nazwa pojazdu",
+          "odometer_entity": "Encja licznika przebiegu (opcjonalnie)",
+          "unit": "Jednostka odległości",
+          "direction": "Kierunek paska postępu"
+        },
+        "data_description": {
+          "odometer_entity": "Sensor z całkowitym przebiegiem. Pozostaw puste, aby śledzić liczniki tylko według czasu.",
+          "direction": "Zużyte: od 0 do 100 w miarę zbliżania się terminu. Pozostało: od 100 do 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Zmień konfigurację pojazdu",
+        "description": "Liczniki z interwałem przebiegu: {counters}",
+        "data": {
+          "name": "Nazwa pojazdu",
+          "odometer_entity": "Encja licznika przebiegu (opcjonalnie)",
+          "unit": "Jednostka odległości",
+          "direction": "Kierunek paska postępu"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Potwierdź zmianę licznika przebiegu",
+        "description": "Aktualny stan licznika: {old_reading}. Stan nowej encji: {new_reading}. Zapisane wartości z ostatniego serwisu zostają zachowane. Liczniki ze stanem z ostatniego serwisu powyżej nowej wartości: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Liczniki przeglądów",
+        "description": "Dodaj teraz jeden lub więcej liczników przeglądów do pojazdu albo zakończ i dodaj je później.",
+        "menu_options": {
+          "add_counter": "Dodaj licznik",
+          "finish": "Zakończ konfigurację"
+        }
+      },
+      "add_counter": {
+        "title": "Dodaj licznik",
+        "data": {
+          "template": "Szablon"
+        }
+      },
+      "counter_details": {
+        "title": "Szczegóły licznika",
+        "data": {
+          "name": "Nazwa",
+          "time_value": "Interwał czasowy",
+          "time_unit": "Jednostka interwału czasowego",
+          "km_interval": "Interwał przebiegu",
+          "last_date": "Data ostatniego serwisu",
+          "last_odometer": "Przebieg przy ostatnim serwisie",
+          "threshold": "Próg ostrzeżenia (%)"
+        },
+        "data_description": {
+          "time_value": "Pozostaw puste dla licznika tylko według przebiegu.",
+          "km_interval": "Pozostaw puste dla licznika tylko według czasu. Podawany w jednostce odległości pojazdu."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "Wybrana encja nie ma stanu liczbowego.",
+      "odometer_required_by_counters": "Istnieją liczniki z interwałem przebiegu. Najpierw je edytuj lub usuń."
+    },
+    "abort": {
+      "reconfigure_successful": "Konfiguracja pojazdu zmieniona."
+    },
+    "create_entry": {
+      "default": "Pojazd utworzony. Kolejne liczniki lub kolejny pojazd możesz dodać w dowolnym momencie w Ustawienia > Urządzenia i usługi > Car Maintenance (Dodaj licznik / Dodaj wpis)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Licznik",
+      "initiate_flow": {
+        "user": "Dodaj licznik"
+      },
+      "entry_type": "Licznik przeglądów",
+      "step": {
+        "user": {
+          "title": "Dodaj licznik",
+          "data": {
+            "template": "Szablon"
+          }
+        },
+        "details": {
+          "title": "Szczegóły licznika",
+          "data": {
+            "name": "Nazwa",
+            "time_value": "Interwał czasowy",
+            "time_unit": "Jednostka interwału czasowego",
+            "km_interval": "Interwał przebiegu",
+            "last_date": "Data ostatniego serwisu",
+            "last_odometer": "Przebieg przy ostatnim serwisie",
+            "threshold": "Próg ostrzeżenia (%)"
+          },
+          "data_description": {
+            "time_value": "Pozostaw puste dla licznika tylko według przebiegu.",
+            "km_interval": "Pozostaw puste dla licznika tylko według czasu. Podawany w jednostce odległości pojazdu."
+          }
+        },
+        "reconfigure": {
+          "title": "Edytuj licznik",
+          "data": {
+            "name": "Nazwa",
+            "time_value": "Interwał czasowy",
+            "time_unit": "Jednostka interwału czasowego",
+            "km_interval": "Interwał przebiegu",
+            "last_date": "Data ostatniego serwisu",
+            "last_odometer": "Przebieg przy ostatnim serwisie",
+            "threshold": "Próg ostrzeżenia (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Ustaw interwał czasowy, interwał przebiegu lub oba.",
+        "future_date": "Data ostatniego serwisu nie może być w przyszłości."
+      },
+      "abort": {
+        "reconfigure_successful": "Licznik zaktualizowany."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilometry",
+        "mi": "Mile"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Zużyte (0 do 100)",
+        "remaining": "Pozostało (100 do 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Dni",
+        "months": "Miesiące",
+        "years": "Lata"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Przegląd serwisowy",
+        "vehicle_inspection": "Przegląd rejestracyjny",
+        "vignette": "Winieta autostradowa",
+        "oil": "Wymiana oleju",
+        "brake_fluid": "Płyn hamulcowy",
+        "coolant": "Płyn chłodniczy",
+        "timing_belt": "Pasek rozrządu",
+        "battery": "Akumulator",
+        "insurance": "Ubezpieczenie",
+        "tires": "Wymiana opon (sezonowa)",
+        "first_aid_kit": "Apteczka",
+        "custom": "Własny"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Brak dostępnego stanu licznika przebiegu, licznik nie został zresetowany."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Brak encji licznika przebiegu",
+      "description": "Encja licznika przebiegu {entity_id} pojazdu {vehicle} jest niedostępna. Liczniki według przebiegu nadal korzystają z ostatniego znanego stanu. Zmień konfigurację pojazdu, aby to naprawić."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} postęp"
+      },
+      "remaining_days": {
+        "name": "{counter} pozostałe dni"
+      },
+      "due_date": {
+        "name": "{counter} termin"
+      },
+      "remaining_distance": {
+        "name": "{counter} pozostała odległość"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} ostrzeżenie"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} wykonano"
+      }
+    }
+  }
+}

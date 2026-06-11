@@ -253,3 +253,18 @@ async def test_mile_values_roundtrip_through_reconfigure(
     subentry = next(iter(entry.subentries.values()))
     assert subentry.data[CONF_KM_INTERVAL] == stored_interval
     assert subentry.data[CONF_LAST_ODOMETER] == stored_odometer
+
+
+async def test_template_prefill_follows_ha_language(
+    hass: HomeAssistant,
+) -> None:
+    """The counter name prefill uses the HA UI language."""
+    hass.config.language = "cs"
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry()
+    await _setup_entry(hass, entry)
+
+    result = await _start_details(hass, entry, "service")
+    schema = result["data_schema"].schema
+    name_key = next(key for key in schema if key == CONF_NAME)
+    assert name_key.default() == "Servisní prohlídka"

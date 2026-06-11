@@ -18,6 +18,7 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import selector
+from homeassistant.helpers.translation import async_get_translations
 from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import DistanceConverter
 from homeassistant.util.unit_system import METRIC_SYSTEM
@@ -204,9 +205,21 @@ def _counter_data(user_input: dict[str, Any], unit: str) -> dict[str, Any]:
     }
 
 
+async def _template_name(hass: HomeAssistant, template_key: str) -> str:
+    """Template display name in the HA UI language, for the name prefill."""
+    if not TEMPLATES[template_key]["name"]:
+        return ""
+    translations = await async_get_translations(
+        hass, hass.config.language, "selector", integrations={DOMAIN}
+    )
+    key = f"component.{DOMAIN}.selector.template.options.{template_key}"
+    return translations.get(key, TEMPLATES[template_key]["name"])
+
+
 def _template_defaults(
     template_key: str,
     *,
+    name: str,
     has_odometer: bool,
     unit: str,
     current_odometer: float | None,
@@ -214,7 +227,7 @@ def _template_defaults(
     """Prefill values for the counter details form from a template."""
     template = TEMPLATES[template_key]
     defaults: dict[str, Any] = {
-        CONF_NAME: template["name"],
+        CONF_NAME: name,
         CONF_THRESHOLD: DEFAULT_THRESHOLD,
     }
     if template["time"]:
@@ -320,6 +333,7 @@ class CounterSubentryFlow(ConfigSubentryFlow):
         else:
             defaults = _template_defaults(
                 self._template,
+                name=await _template_name(self.hass, self._template),
                 has_odometer=self._has_odometer,
                 unit=self._unit,
                 current_odometer=self._current_odometer(),
@@ -461,6 +475,7 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
         else:
             defaults = _template_defaults(
                 self._counter_template,
+                name=await _template_name(self.hass, self._counter_template),
                 has_odometer=odometer is not None,
                 unit=unit,
                 current_odometer=_entity_reading(self.hass, odometer, unit),

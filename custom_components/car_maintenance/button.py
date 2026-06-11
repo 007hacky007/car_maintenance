@@ -46,7 +46,6 @@ class ResetButton(CounterEntity, ButtonEntity):
         self, coordinator: VehicleCoordinator, subentry: ConfigSubentry
     ) -> None:
         super().__init__(coordinator, subentry, "reset")
-        self._attr_name = f"{subentry.title} done"
 
     async def async_press(self) -> None:
         """Reset the counter; the subentry update reloads the entry."""

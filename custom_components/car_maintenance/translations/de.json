@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Fahrzeug hinzufügen",
+        "data": {
+          "name": "Fahrzeugname",
+          "odometer_entity": "Kilometerzähler-Entität (optional)",
+          "unit": "Entfernungseinheit",
+          "direction": "Richtung des Fortschrittsbalkens"
+        },
+        "data_description": {
+          "odometer_entity": "Sensor mit der gesamten Fahrstrecke. Leer lassen, um Zähler nur nach Zeit zu verfolgen.",
+          "direction": "Verbraucht: 0 bis 100 mit näher rückendem Termin. Verbleibend: 100 bis 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Fahrzeug neu konfigurieren",
+        "description": "Zähler mit Entfernungsintervall: {counters}",
+        "data": {
+          "name": "Fahrzeugname",
+          "odometer_entity": "Kilometerzähler-Entität (optional)",
+          "unit": "Entfernungseinheit",
+          "direction": "Richtung des Fortschrittsbalkens"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Änderung des Kilometerzählers bestätigen",
+        "description": "Aktueller Kilometerstand: {old_reading}. Stand der neuen Entität: {new_reading}. Die gespeicherten Werte des letzten Service bleiben erhalten. Zähler mit einem letzten Servicestand über dem neuen Wert: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Wartungszähler",
+        "description": "Fügen Sie dem Fahrzeug jetzt einen oder mehrere Wartungszähler hinzu, oder schließen Sie die Einrichtung ab und fügen Sie sie später hinzu.",
+        "menu_options": {
+          "add_counter": "Zähler hinzufügen",
+          "finish": "Einrichtung abschließen"
+        }
+      },
+      "add_counter": {
+        "title": "Zähler hinzufügen",
+        "data": {
+          "template": "Vorlage"
+        }
+      },
+      "counter_details": {
+        "title": "Zählerdetails",
+        "data": {
+          "name": "Name",
+          "time_value": "Zeitintervall",
+          "time_unit": "Einheit des Zeitintervalls",
+          "km_interval": "Entfernungsintervall",
+          "last_date": "Datum des letzten Service",
+          "last_odometer": "Kilometerstand beim letzten Service",
+          "threshold": "Warnschwelle (%)"
+        },
+        "data_description": {
+          "time_value": "Leer lassen für einen rein entfernungsbasierten Zähler.",
+          "km_interval": "Leer lassen für einen rein zeitbasierten Zähler. Eingabe in der Entfernungseinheit des Fahrzeugs."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "Die ausgewählte Entität hat keinen numerischen Zustand.",
+      "odometer_required_by_counters": "Es gibt Zähler mit einem Entfernungsintervall. Bearbeiten oder löschen Sie diese zuerst."
+    },
+    "abort": {
+      "reconfigure_successful": "Fahrzeug neu konfiguriert."
+    },
+    "create_entry": {
+      "default": "Fahrzeug erstellt. Weitere Zähler oder ein weiteres Fahrzeug können Sie jederzeit unter Einstellungen > Geräte & Dienste > Car Maintenance hinzufügen (Zähler hinzufügen / Eintrag hinzufügen)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Zähler",
+      "initiate_flow": {
+        "user": "Zähler hinzufügen"
+      },
+      "entry_type": "Wartungszähler",
+      "step": {
+        "user": {
+          "title": "Zähler hinzufügen",
+          "data": {
+            "template": "Vorlage"
+          }
+        },
+        "details": {
+          "title": "Zählerdetails",
+          "data": {
+            "name": "Name",
+            "time_value": "Zeitintervall",
+            "time_unit": "Einheit des Zeitintervalls",
+            "km_interval": "Entfernungsintervall",
+            "last_date": "Datum des letzten Service",
+            "last_odometer": "Kilometerstand beim letzten Service",
+            "threshold": "Warnschwelle (%)"
+          },
+          "data_description": {
+            "time_value": "Leer lassen für einen rein entfernungsbasierten Zähler.",
+            "km_interval": "Leer lassen für einen rein zeitbasierten Zähler. Eingabe in der Entfernungseinheit des Fahrzeugs."
+          }
+        },
+        "reconfigure": {
+          "title": "Zähler bearbeiten",
+          "data": {
+            "name": "Name",
+            "time_value": "Zeitintervall",
+            "time_unit": "Einheit des Zeitintervalls",
+            "km_interval": "Entfernungsintervall",
+            "last_date": "Datum des letzten Service",
+            "last_odometer": "Kilometerstand beim letzten Service",
+            "threshold": "Warnschwelle (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Geben Sie ein Zeitintervall, ein Entfernungsintervall oder beides an.",
+        "future_date": "Das Datum des letzten Service darf nicht in der Zukunft liegen."
+      },
+      "abort": {
+        "reconfigure_successful": "Zähler aktualisiert."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilometer",
+        "mi": "Meilen"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Verbraucht (0 bis 100)",
+        "remaining": "Verbleibend (100 bis 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Tage",
+        "months": "Monate",
+        "years": "Jahre"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Serviceinspektion",
+        "vehicle_inspection": "Hauptuntersuchung (HU)",
+        "vignette": "Autobahnvignette",
+        "oil": "Ölwechsel",
+        "brake_fluid": "Bremsflüssigkeit",
+        "coolant": "Kühlmittel",
+        "timing_belt": "Zahnriemen",
+        "battery": "Batterie",
+        "insurance": "Versicherung",
+        "tires": "Reifenwechsel (saisonal)",
+        "first_aid_kit": "Verbandskasten",
+        "custom": "Benutzerdefiniert"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Es ist kein Kilometerstand verfügbar, der Zähler wurde nicht zurückgesetzt."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Kilometerzähler-Entität fehlt",
+      "description": "Die Kilometerzähler-Entität {entity_id} des Fahrzeugs {vehicle} ist nicht verfügbar. Entfernungsbasierte Zähler verwenden weiterhin den letzten bekannten Stand. Konfigurieren Sie das Fahrzeug neu, um dies zu beheben."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} Fortschritt"
+      },
+      "remaining_days": {
+        "name": "{counter} verbleibende Tage"
+      },
+      "due_date": {
+        "name": "{counter} Fälligkeitsdatum"
+      },
+      "remaining_distance": {
+        "name": "{counter} verbleibende Strecke"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} Warnung"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} erledigt"
+      }
+    }
+  }
+}

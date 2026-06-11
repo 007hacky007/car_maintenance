@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ajouter un véhicule",
+        "data": {
+          "name": "Nom du véhicule",
+          "odometer_entity": "Entité compteur kilométrique (optionnel)",
+          "unit": "Unité de distance",
+          "direction": "Sens de la barre de progression"
+        },
+        "data_description": {
+          "odometer_entity": "Capteur indiquant la distance totale parcourue. Laissez vide pour suivre les compteurs uniquement par le temps.",
+          "direction": "Écoulé : de 0 à 100 à l'approche de l'échéance. Restant : de 100 à 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigurer le véhicule",
+        "description": "Compteurs utilisant un intervalle de distance : {counters}",
+        "data": {
+          "name": "Nom du véhicule",
+          "odometer_entity": "Entité compteur kilométrique (optionnel)",
+          "unit": "Unité de distance",
+          "direction": "Sens de la barre de progression"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Confirmer le changement de compteur kilométrique",
+        "description": "Relevé actuel du compteur : {old_reading}. Relevé de la nouvelle entité : {new_reading}. Les valeurs enregistrées du dernier entretien sont conservées. Compteurs dont le relevé du dernier entretien dépasse la nouvelle valeur : {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Compteurs d'entretien",
+        "description": "Ajoutez dès maintenant un ou plusieurs compteurs d'entretien au véhicule, ou terminez et ajoutez-les plus tard.",
+        "menu_options": {
+          "add_counter": "Ajouter un compteur",
+          "finish": "Terminer la configuration"
+        }
+      },
+      "add_counter": {
+        "title": "Ajouter un compteur",
+        "data": {
+          "template": "Modèle"
+        }
+      },
+      "counter_details": {
+        "title": "Détails du compteur",
+        "data": {
+          "name": "Nom",
+          "time_value": "Intervalle de temps",
+          "time_unit": "Unité de l'intervalle de temps",
+          "km_interval": "Intervalle de distance",
+          "last_date": "Date du dernier entretien",
+          "last_odometer": "Kilométrage au dernier entretien",
+          "threshold": "Seuil d'alerte (%)"
+        },
+        "data_description": {
+          "time_value": "Laissez vide pour un compteur basé uniquement sur la distance.",
+          "km_interval": "Laissez vide pour un compteur basé uniquement sur le temps. Saisi dans l'unité de distance du véhicule."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "L'entité sélectionnée n'a pas d'état numérique.",
+      "odometer_required_by_counters": "Des compteurs avec un intervalle de distance existent. Modifiez-les ou supprimez-les d'abord."
+    },
+    "abort": {
+      "reconfigure_successful": "Véhicule reconfiguré."
+    },
+    "create_entry": {
+      "default": "Véhicule créé. Vous pouvez ajouter d'autres compteurs ou un autre véhicule à tout moment dans Paramètres > Appareils et services > Car Maintenance (Ajouter un compteur / Ajouter une entrée)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Compteur",
+      "initiate_flow": {
+        "user": "Ajouter un compteur"
+      },
+      "entry_type": "Compteur d'entretien",
+      "step": {
+        "user": {
+          "title": "Ajouter un compteur",
+          "data": {
+            "template": "Modèle"
+          }
+        },
+        "details": {
+          "title": "Détails du compteur",
+          "data": {
+            "name": "Nom",
+            "time_value": "Intervalle de temps",
+            "time_unit": "Unité de l'intervalle de temps",
+            "km_interval": "Intervalle de distance",
+            "last_date": "Date du dernier entretien",
+            "last_odometer": "Kilométrage au dernier entretien",
+            "threshold": "Seuil d'alerte (%)"
+          },
+          "data_description": {
+            "time_value": "Laissez vide pour un compteur basé uniquement sur la distance.",
+            "km_interval": "Laissez vide pour un compteur basé uniquement sur le temps. Saisi dans l'unité de distance du véhicule."
+          }
+        },
+        "reconfigure": {
+          "title": "Modifier le compteur",
+          "data": {
+            "name": "Nom",
+            "time_value": "Intervalle de temps",
+            "time_unit": "Unité de l'intervalle de temps",
+            "km_interval": "Intervalle de distance",
+            "last_date": "Date du dernier entretien",
+            "last_odometer": "Kilométrage au dernier entretien",
+            "threshold": "Seuil d'alerte (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Définissez un intervalle de temps, un intervalle de distance, ou les deux.",
+        "future_date": "La date du dernier entretien ne peut pas être dans le futur."
+      },
+      "abort": {
+        "reconfigure_successful": "Compteur mis à jour."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilomètres",
+        "mi": "Miles"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Écoulé (0 à 100)",
+        "remaining": "Restant (100 à 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Jours",
+        "months": "Mois",
+        "years": "Années"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Révision",
+        "vehicle_inspection": "Contrôle technique",
+        "vignette": "Vignette autoroutière",
+        "oil": "Vidange d'huile",
+        "brake_fluid": "Liquide de frein",
+        "coolant": "Liquide de refroidissement",
+        "timing_belt": "Courroie de distribution",
+        "battery": "Batterie",
+        "insurance": "Assurance",
+        "tires": "Changement de pneus (saisonnier)",
+        "first_aid_kit": "Trousse de premiers secours",
+        "custom": "Personnalisé"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Aucun relevé du compteur kilométrique n'est disponible, le compteur n'a pas été réinitialisé."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Entité compteur kilométrique manquante",
+      "description": "L'entité compteur kilométrique {entity_id} du véhicule {vehicle} n'est pas disponible. Les compteurs basés sur la distance continuent d'utiliser le dernier relevé connu. Reconfigurez le véhicule pour corriger cela."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} progression"
+      },
+      "remaining_days": {
+        "name": "{counter} jours restants"
+      },
+      "due_date": {
+        "name": "{counter} date d'échéance"
+      },
+      "remaining_distance": {
+        "name": "{counter} distance restante"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} alerte"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} effectué"
+      }
+    }
+  }
+}

@@ -2,123 +2,123 @@
   "config": {
     "step": {
       "user": {
-        "title": "Pridat vozidlo",
+        "title": "Přidat vozidlo",
         "data": {
-          "name": "Nazev vozidla",
-          "odometer_entity": "Entita odometru (volitelne)",
-          "unit": "Jednotka vzdalenosti",
-          "direction": "Smer progress baru"
+          "name": "Název vozidla",
+          "odometer_entity": "Entita odometru (volitelné)",
+          "unit": "Jednotka vzdálenosti",
+          "direction": "Směr progress baru"
         },
         "data_description": {
-          "odometer_entity": "Senzor s celkovym najezdem. Nechte prazdne pro sledovani pouze podle casu.",
-          "direction": "Vycerpano: 0 az 100 s blizicim se terminem. Zbyva: 100 az 0."
+          "odometer_entity": "Senzor s celkovým nájezdem. Nechte prázdné pro sledování pouze podle času.",
+          "direction": "Vyčerpáno: 0 až 100 s blížícím se termínem. Zbývá: 100 až 0."
         }
       },
       "reconfigure": {
         "title": "Upravit vozidlo",
-        "description": "Pocitadla s km intervalem: {counters}",
+        "description": "Počítadla s intervalem vzdálenosti: {counters}",
         "data": {
-          "name": "Nazev vozidla",
-          "odometer_entity": "Entita odometru (volitelne)",
-          "unit": "Jednotka vzdalenosti",
-          "direction": "Smer progress baru"
+          "name": "Název vozidla",
+          "odometer_entity": "Entita odometru (volitelné)",
+          "unit": "Jednotka vzdálenosti",
+          "direction": "Směr progress baru"
         }
       },
       "confirm_odometer": {
-        "title": "Potvrdit zmenu odometru",
-        "description": "Aktualni stav odometru: {old_reading}. Stav nove entity: {new_reading}. Ulozene hodnoty poslednich servisu zustavaji. Pocitadla s poslednim servisem nad novou hodnotou: {below_counters}"
+        "title": "Potvrdit změnu odometru",
+        "description": "Aktuální stav odometru: {old_reading}. Stav nové entity: {new_reading}. Uložené hodnoty posledních servisů zůstávají. Počítadla s posledním servisem nad novou hodnotou: {below_counters}"
       },
       "counters_menu": {
-        "title": "Pocitadla udrzby",
-        "description": "Pridejte vozidlu jedno nebo vice pocitadel udrzby hned, nebo dokoncete nastaveni a pridejte je pozdeji.",
+        "title": "Počítadla údržby",
+        "description": "Přidejte vozidlu jedno nebo více počítadel údržby hned, nebo dokončete nastavení a přidejte je později.",
         "menu_options": {
-          "add_counter": "Pridat pocitadlo",
-          "finish": "Dokoncit nastaveni"
+          "add_counter": "Přidat počítadlo",
+          "finish": "Dokončit nastavení"
         }
       },
       "add_counter": {
-        "title": "Pridat pocitadlo",
+        "title": "Přidat počítadlo",
         "data": {
-          "template": "Sablona"
+          "template": "Šablona"
         }
       },
       "counter_details": {
-        "title": "Detaily pocitadla",
+        "title": "Detaily počítadla",
         "data": {
-          "name": "Nazev",
-          "time_value": "Casovy interval",
-          "time_unit": "Jednotka casoveho intervalu",
-          "km_interval": "Interval vzdalenosti",
-          "last_date": "Datum posledniho provedeni",
-          "last_odometer": "Stav odometru pri poslednim provedeni",
-          "threshold": "Prah upozorneni (%)"
+          "name": "Název",
+          "time_value": "Časový interval",
+          "time_unit": "Jednotka časového intervalu",
+          "km_interval": "Interval vzdálenosti",
+          "last_date": "Datum posledního provedení",
+          "last_odometer": "Stav odometru při posledním provedení",
+          "threshold": "Práh upozornění (%)"
         },
         "data_description": {
-          "time_value": "Nechte prazdne pro pocitadlo jen podle vzdalenosti.",
-          "km_interval": "Nechte prazdne pro pocitadlo jen podle casu. Zadava se v jednotce vozidla."
+          "time_value": "Nechte prázdné pro počítadlo jen podle vzdálenosti.",
+          "km_interval": "Nechte prázdné pro počítadlo jen podle času. Zadává se v jednotce vozidla."
         }
       }
     },
     "error": {
-      "odometer_not_numeric": "Vybrana entita nema ciselnou hodnotu.",
-      "odometer_required_by_counters": "Existuji pocitadla s km intervalem. Nejprve je upravte nebo smazte."
+      "odometer_not_numeric": "Vybraná entita nemá číselnou hodnotu.",
+      "odometer_required_by_counters": "Existují počítadla s intervalem vzdálenosti. Nejprve je upravte nebo smažte."
     },
     "abort": {
       "reconfigure_successful": "Vozidlo upraveno."
     },
     "create_entry": {
-      "default": "Vozidlo vytvoreno. Dalsi pocitadla nebo dalsi vozidlo muzete kdykoli pridat v Nastaveni > Zarizeni a sluzby > Car Maintenance (Pridat pocitadlo / Pridat zaznam)."
+      "default": "Vozidlo vytvořeno. Další počítadla nebo další vozidlo můžete kdykoli přidat v Nastavení > Zařízení a služby > Car Maintenance (Přidat počítadlo / Přidat záznam)."
     }
   },
   "config_subentries": {
     "counter": {
-      "title": "Pocitadlo",
+      "title": "Počítadlo",
       "initiate_flow": {
-        "user": "Pridat pocitadlo"
+        "user": "Přidat počítadlo"
       },
-      "entry_type": "Pocitadlo udrzby",
+      "entry_type": "Počítadlo údržby",
       "step": {
         "user": {
-          "title": "Pridat pocitadlo",
+          "title": "Přidat počítadlo",
           "data": {
-            "template": "Sablona"
+            "template": "Šablona"
           }
         },
         "details": {
-          "title": "Detaily pocitadla",
+          "title": "Detaily počítadla",
           "data": {
-            "name": "Nazev",
-            "time_value": "Casovy interval",
-            "time_unit": "Jednotka casoveho intervalu",
-            "km_interval": "Interval vzdalenosti",
-            "last_date": "Datum posledniho provedeni",
-            "last_odometer": "Stav odometru pri poslednim provedeni",
-            "threshold": "Prah upozorneni (%)"
+            "name": "Název",
+            "time_value": "Časový interval",
+            "time_unit": "Jednotka časového intervalu",
+            "km_interval": "Interval vzdálenosti",
+            "last_date": "Datum posledního provedení",
+            "last_odometer": "Stav odometru při posledním provedení",
+            "threshold": "Práh upozornění (%)"
           },
           "data_description": {
-            "time_value": "Nechte prazdne pro pocitadlo jen podle vzdalenosti.",
-            "km_interval": "Nechte prazdne pro pocitadlo jen podle casu. Zadava se v jednotce vozidla."
+            "time_value": "Nechte prázdné pro počítadlo jen podle vzdálenosti.",
+            "km_interval": "Nechte prázdné pro počítadlo jen podle času. Zadává se v jednotce vozidla."
           }
         },
         "reconfigure": {
-          "title": "Upravit pocitadlo",
+          "title": "Upravit počítadlo",
           "data": {
-            "name": "Nazev",
-            "time_value": "Casovy interval",
-            "time_unit": "Jednotka casoveho intervalu",
-            "km_interval": "Interval vzdalenosti",
-            "last_date": "Datum posledniho provedeni",
-            "last_odometer": "Stav odometru pri poslednim provedeni",
-            "threshold": "Prah upozorneni (%)"
+            "name": "Název",
+            "time_value": "Časový interval",
+            "time_unit": "Jednotka časového intervalu",
+            "km_interval": "Interval vzdálenosti",
+            "last_date": "Datum posledního provedení",
+            "last_odometer": "Stav odometru při posledním provedení",
+            "threshold": "Práh upozornění (%)"
           }
         }
       },
       "error": {
-        "no_interval": "Zadejte casovy interval, interval vzdalenosti, nebo oboji.",
-        "future_date": "Datum posledniho provedeni nemuze byt v budoucnosti."
+        "no_interval": "Zadejte časový interval, interval vzdálenosti, nebo obojí.",
+        "future_date": "Datum posledního provedení nemůže být v budoucnosti."
       },
       "abort": {
-        "reconfigure_successful": "Pocitadlo upraveno."
+        "reconfigure_successful": "Počítadlo upraveno."
       }
     }
   },
@@ -126,48 +126,74 @@
     "unit": {
       "options": {
         "km": "Kilometry",
-        "mi": "Mile"
+        "mi": "Míle"
       }
     },
     "direction": {
       "options": {
-        "exhausted": "Vycerpano (0 az 100)",
-        "remaining": "Zbyva (100 az 0)"
+        "exhausted": "Vyčerpáno (0 až 100)",
+        "remaining": "Zbývá (100 až 0)"
       }
     },
     "time_unit": {
       "options": {
         "days": "Dny",
-        "months": "Mesice",
+        "months": "Měsíce",
         "years": "Roky"
       }
     },
     "template": {
       "options": {
-        "service": "Servisni prohlidka",
+        "service": "Servisní prohlídka",
         "vehicle_inspection": "STK",
-        "vignette": "Dalnicni znamka",
-        "oil": "Vymena oleje",
-        "brake_fluid": "Brzdova kapalina",
-        "coolant": "Chladici kapalina",
+        "vignette": "Dálniční známka",
+        "oil": "Výměna oleje",
+        "brake_fluid": "Brzdová kapalina",
+        "coolant": "Chladicí kapalina",
         "timing_belt": "Rozvody",
         "battery": "Baterie",
-        "insurance": "Pojisteni",
-        "tires": "Prezuti pneumatik",
-        "first_aid_kit": "Lekarnicka",
-        "custom": "Vlastni"
+        "insurance": "Pojištění",
+        "tires": "Přezutí pneumatik",
+        "first_aid_kit": "Lékárnička",
+        "custom": "Vlastní"
       }
     }
   },
   "exceptions": {
     "no_odometer_reading": {
-      "message": "Neni k dispozici zadny stav odometru, pocitadlo nebylo resetovano."
+      "message": "Není k dispozici žádný stav odometru, počítadlo nebylo resetováno."
     }
   },
   "issues": {
     "odometer_missing": {
-      "title": "Chybi entita odometru",
-      "description": "Entita odometru {entity_id} vozidla {vehicle} neni dostupna. Km pocitadla pouzivaji posledni znamou hodnotu. Opravte to v nastaveni vozidla."
+      "title": "Chybí entita odometru",
+      "description": "Entita odometru {entity_id} vozidla {vehicle} není dostupná. Počítadla podle vzdálenosti používají poslední známou hodnotu. Opravte to v nastavení vozidla."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} průběh"
+      },
+      "remaining_days": {
+        "name": "{counter} zbývající dny"
+      },
+      "due_date": {
+        "name": "{counter} termín"
+      },
+      "remaining_distance": {
+        "name": "{counter} zbývající vzdálenost"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} upozornění"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} provedeno"
+      }
     }
   }
 }

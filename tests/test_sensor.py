@@ -47,6 +47,10 @@ async def test_progress_and_component_sensors(
 
     progress = hass.states.get(_eid(hass, entry, sub_id, "progress"))
     assert progress.state == "44.1"
+    assert (
+        progress.attributes["friendly_name"]
+        == "Test Car Service inspection progress"
+    )
     assert progress.attributes["limiting_factor"] == "time"
     assert progress.attributes["km_percent"] == 13.3
     assert progress.attributes["exhausted_percent"] == 44.1

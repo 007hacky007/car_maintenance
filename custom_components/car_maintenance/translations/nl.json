@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Voertuig toevoegen",
+        "data": {
+          "name": "Naam van het voertuig",
+          "odometer_entity": "Kilometerteller-entiteit (optioneel)",
+          "unit": "Afstandseenheid",
+          "direction": "Richting van de voortgangsbalk"
+        },
+        "data_description": {
+          "odometer_entity": "Sensor met de totaal gereden afstand. Laat leeg om tellers alleen op tijd bij te houden.",
+          "direction": "Verbruikt: 0 tot 100 naarmate de deadline nadert. Resterend: 100 tot 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Voertuig opnieuw configureren",
+        "description": "Tellers met een afstandsinterval: {counters}",
+        "data": {
+          "name": "Naam van het voertuig",
+          "odometer_entity": "Kilometerteller-entiteit (optioneel)",
+          "unit": "Afstandseenheid",
+          "direction": "Richting van de voortgangsbalk"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Wijziging kilometerteller bevestigen",
+        "description": "Huidige kilometerstand: {old_reading}. Stand van de nieuwe entiteit: {new_reading}. Opgeslagen waarden van de laatste onderhoudsbeurt blijven bewaard. Tellers met een laatste onderhoudsstand boven de nieuwe waarde: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Onderhoudstellers",
+        "description": "Voeg nu een of meer onderhoudstellers toe aan het voertuig, of rond af en voeg ze later toe.",
+        "menu_options": {
+          "add_counter": "Teller toevoegen",
+          "finish": "Installatie voltooien"
+        }
+      },
+      "add_counter": {
+        "title": "Teller toevoegen",
+        "data": {
+          "template": "Sjabloon"
+        }
+      },
+      "counter_details": {
+        "title": "Tellerdetails",
+        "data": {
+          "name": "Naam",
+          "time_value": "Tijdsinterval",
+          "time_unit": "Eenheid van het tijdsinterval",
+          "km_interval": "Afstandsinterval",
+          "last_date": "Datum van laatste onderhoudsbeurt",
+          "last_odometer": "Kilometerstand bij laatste onderhoudsbeurt",
+          "threshold": "Waarschuwingsdrempel (%)"
+        },
+        "data_description": {
+          "time_value": "Laat leeg voor een teller op basis van alleen afstand.",
+          "km_interval": "Laat leeg voor een teller op basis van alleen tijd. In te voeren in de afstandseenheid van het voertuig."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "De geselecteerde entiteit heeft geen numerieke status.",
+      "odometer_required_by_counters": "Er bestaan tellers met een afstandsinterval. Bewerk of verwijder deze eerst."
+    },
+    "abort": {
+      "reconfigure_successful": "Voertuig opnieuw geconfigureerd."
+    },
+    "create_entry": {
+      "default": "Voertuig aangemaakt. Je kunt op elk moment meer tellers of een ander voertuig toevoegen via Instellingen > Apparaten en diensten > Car Maintenance (Teller toevoegen / Item toevoegen)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Teller",
+      "initiate_flow": {
+        "user": "Teller toevoegen"
+      },
+      "entry_type": "Onderhoudsteller",
+      "step": {
+        "user": {
+          "title": "Teller toevoegen",
+          "data": {
+            "template": "Sjabloon"
+          }
+        },
+        "details": {
+          "title": "Tellerdetails",
+          "data": {
+            "name": "Naam",
+            "time_value": "Tijdsinterval",
+            "time_unit": "Eenheid van het tijdsinterval",
+            "km_interval": "Afstandsinterval",
+            "last_date": "Datum van laatste onderhoudsbeurt",
+            "last_odometer": "Kilometerstand bij laatste onderhoudsbeurt",
+            "threshold": "Waarschuwingsdrempel (%)"
+          },
+          "data_description": {
+            "time_value": "Laat leeg voor een teller op basis van alleen afstand.",
+            "km_interval": "Laat leeg voor een teller op basis van alleen tijd. In te voeren in de afstandseenheid van het voertuig."
+          }
+        },
+        "reconfigure": {
+          "title": "Teller bewerken",
+          "data": {
+            "name": "Naam",
+            "time_value": "Tijdsinterval",
+            "time_unit": "Eenheid van het tijdsinterval",
+            "km_interval": "Afstandsinterval",
+            "last_date": "Datum van laatste onderhoudsbeurt",
+            "last_odometer": "Kilometerstand bij laatste onderhoudsbeurt",
+            "threshold": "Waarschuwingsdrempel (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Stel een tijdsinterval, een afstandsinterval of beide in.",
+        "future_date": "De datum van de laatste onderhoudsbeurt kan niet in de toekomst liggen."
+      },
+      "abort": {
+        "reconfigure_successful": "Teller bijgewerkt."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilometers",
+        "mi": "Mijlen"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Verbruikt (0 tot 100)",
+        "remaining": "Resterend (100 tot 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Dagen",
+        "months": "Maanden",
+        "years": "Jaren"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Onderhoudsbeurt",
+        "vehicle_inspection": "APK",
+        "vignette": "Autobahnvignet",
+        "oil": "Olie verversen",
+        "brake_fluid": "Remvloeistof",
+        "coolant": "Koelvloeistof",
+        "timing_belt": "Distributieriem",
+        "battery": "Accu",
+        "insurance": "Verzekering",
+        "tires": "Bandenwissel (seizoensgebonden)",
+        "first_aid_kit": "Verbanddoos",
+        "custom": "Aangepast"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Er is geen kilometerstand beschikbaar, de teller is niet gereset."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Kilometerteller-entiteit ontbreekt",
+      "description": "De kilometerteller-entiteit {entity_id} van voertuig {vehicle} is niet beschikbaar. Tellers op basis van afstand blijven de laatst bekende stand gebruiken. Configureer het voertuig opnieuw om dit op te lossen."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} voortgang"
+      },
+      "remaining_days": {
+        "name": "{counter} resterende dagen"
+      },
+      "due_date": {
+        "name": "{counter} vervaldatum"
+      },
+      "remaining_distance": {
+        "name": "{counter} resterende afstand"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} waarschuwing"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} gedaan"
+      }
+    }
+  }
+}

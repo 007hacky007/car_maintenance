@@ -67,7 +67,6 @@ class ProgressSensor(CounterEntity, SensorEntity):
         self, coordinator: VehicleCoordinator, subentry: ConfigSubentry
     ) -> None:
         super().__init__(coordinator, subentry, "progress")
-        self._attr_name = f"{subentry.title} progress"
 
     @property
     def native_value(self) -> float | None:
@@ -115,7 +114,6 @@ class RemainingDaysSensor(CounterEntity, SensorEntity):
         self, coordinator: VehicleCoordinator, subentry: ConfigSubentry
     ) -> None:
         super().__init__(coordinator, subentry, "remaining_days")
-        self._attr_name = f"{subentry.title} remaining days"
 
     @property
     def native_value(self) -> int | None:
@@ -131,7 +129,6 @@ class DueDateSensor(CounterEntity, SensorEntity):
         self, coordinator: VehicleCoordinator, subentry: ConfigSubentry
     ) -> None:
         super().__init__(coordinator, subentry, "due_date")
-        self._attr_name = f"{subentry.title} due date"
 
     @property
     def native_value(self) -> date | None:
@@ -150,7 +147,6 @@ class RemainingDistanceSensor(CounterEntity, SensorEntity):
         self, coordinator: VehicleCoordinator, subentry: ConfigSubentry
     ) -> None:
         super().__init__(coordinator, subentry, "remaining_distance")
-        self._attr_name = f"{subentry.title} remaining distance"
 
     @property
     def native_value(self) -> float | None:

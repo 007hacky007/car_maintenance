@@ -43,7 +43,6 @@ class WarningBinarySensor(CounterEntity, BinarySensorEntity):
         self, coordinator: VehicleCoordinator, subentry: ConfigSubentry
     ) -> None:
         super().__init__(coordinator, subentry, "warning")
-        self._attr_name = f"{subentry.title} warning"
 
     @property
     def is_on(self) -> bool | None:

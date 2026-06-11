@@ -169,5 +169,31 @@
       "title": "Odometer entity missing",
       "description": "The odometer entity {entity_id} of vehicle {vehicle} is not available. Distance-based counters keep using the last known reading. Reconfigure the vehicle to fix this."
     }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} progress"
+      },
+      "remaining_days": {
+        "name": "{counter} remaining days"
+      },
+      "due_date": {
+        "name": "{counter} due date"
+      },
+      "remaining_distance": {
+        "name": "{counter} remaining distance"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} warning"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} done"
+      }
+    }
   }
 }

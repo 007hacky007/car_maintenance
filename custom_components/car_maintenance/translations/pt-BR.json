@@ -1,0 +1,199 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Adicionar veículo",
+        "data": {
+          "name": "Nome do veículo",
+          "odometer_entity": "Entidade do hodômetro (opcional)",
+          "unit": "Unidade de distância",
+          "direction": "Direção da barra de progresso"
+        },
+        "data_description": {
+          "odometer_entity": "Sensor com a distância total percorrida. Deixe vazio para acompanhar os contadores apenas por tempo.",
+          "direction": "Consumido: de 0 a 100 conforme o prazo se aproxima. Restante: de 100 a 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigurar veículo",
+        "description": "Contadores com intervalo de distância: {counters}",
+        "data": {
+          "name": "Nome do veículo",
+          "odometer_entity": "Entidade do hodômetro (opcional)",
+          "unit": "Unidade de distância",
+          "direction": "Direção da barra de progresso"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Confirmar alteração do hodômetro",
+        "description": "Leitura atual do hodômetro: {old_reading}. Leitura da nova entidade: {new_reading}. Os valores salvos da última manutenção são mantidos. Contadores com leitura da última manutenção acima do novo valor: {below_counters}"
+      },
+      "counters_menu": {
+        "title": "Contadores de manutenção",
+        "description": "Adicione agora um ou mais contadores de manutenção ao veículo, ou conclua e adicione-os mais tarde.",
+        "menu_options": {
+          "add_counter": "Adicionar um contador",
+          "finish": "Concluir configuração"
+        }
+      },
+      "add_counter": {
+        "title": "Adicionar contador",
+        "data": {
+          "template": "Modelo"
+        }
+      },
+      "counter_details": {
+        "title": "Detalhes do contador",
+        "data": {
+          "name": "Nome",
+          "time_value": "Intervalo de tempo",
+          "time_unit": "Unidade do intervalo de tempo",
+          "km_interval": "Intervalo de distância",
+          "last_date": "Data da última manutenção",
+          "last_odometer": "Hodômetro na última manutenção",
+          "threshold": "Limite de aviso (%)"
+        },
+        "data_description": {
+          "time_value": "Deixe vazio para um contador apenas por distância.",
+          "km_interval": "Deixe vazio para um contador apenas por tempo. Informado na unidade de distância do veículo."
+        }
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "A entidade selecionada não tem um estado numérico.",
+      "odometer_required_by_counters": "Existem contadores com intervalo de distância. Edite-os ou exclua-os primeiro."
+    },
+    "abort": {
+      "reconfigure_successful": "Veículo reconfigurado."
+    },
+    "create_entry": {
+      "default": "Veículo criado. Você pode adicionar mais contadores ou outro veículo a qualquer momento em Configurações > Dispositivos e serviços > Car Maintenance (Adicionar contador / Adicionar entrada)."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Contador",
+      "initiate_flow": {
+        "user": "Adicionar contador"
+      },
+      "entry_type": "Contador de manutenção",
+      "step": {
+        "user": {
+          "title": "Adicionar contador",
+          "data": {
+            "template": "Modelo"
+          }
+        },
+        "details": {
+          "title": "Detalhes do contador",
+          "data": {
+            "name": "Nome",
+            "time_value": "Intervalo de tempo",
+            "time_unit": "Unidade do intervalo de tempo",
+            "km_interval": "Intervalo de distância",
+            "last_date": "Data da última manutenção",
+            "last_odometer": "Hodômetro na última manutenção",
+            "threshold": "Limite de aviso (%)"
+          },
+          "data_description": {
+            "time_value": "Deixe vazio para um contador apenas por distância.",
+            "km_interval": "Deixe vazio para um contador apenas por tempo. Informado na unidade de distância do veículo."
+          }
+        },
+        "reconfigure": {
+          "title": "Editar contador",
+          "data": {
+            "name": "Nome",
+            "time_value": "Intervalo de tempo",
+            "time_unit": "Unidade do intervalo de tempo",
+            "km_interval": "Intervalo de distância",
+            "last_date": "Data da última manutenção",
+            "last_odometer": "Hodômetro na última manutenção",
+            "threshold": "Limite de aviso (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Defina um intervalo de tempo, um intervalo de distância ou ambos.",
+        "future_date": "A data da última manutenção não pode estar no futuro."
+      },
+      "abort": {
+        "reconfigure_successful": "Contador atualizado."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Quilômetros",
+        "mi": "Milhas"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Consumido (0 a 100)",
+        "remaining": "Restante (100 a 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Dias",
+        "months": "Meses",
+        "years": "Anos"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Revisão",
+        "vehicle_inspection": "Inspeção veicular",
+        "vignette": "Selo de pedágio",
+        "oil": "Troca de óleo",
+        "brake_fluid": "Fluido de freio",
+        "coolant": "Líquido de arrefecimento",
+        "timing_belt": "Correia dentada",
+        "battery": "Bateria",
+        "insurance": "Seguro",
+        "tires": "Troca de pneus (sazonal)",
+        "first_aid_kit": "Kit de primeiros socorros",
+        "custom": "Personalizado"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Nenhuma leitura do hodômetro está disponível, o contador não foi reiniciado."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Entidade do hodômetro ausente",
+      "description": "A entidade do hodômetro {entity_id} do veículo {vehicle} não está disponível. Os contadores por distância continuam usando a última leitura conhecida. Reconfigure o veículo para corrigir isso."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "progress": {
+        "name": "{counter} progresso"
+      },
+      "remaining_days": {
+        "name": "{counter} dias restantes"
+      },
+      "due_date": {
+        "name": "{counter} data de vencimento"
+      },
+      "remaining_distance": {
+        "name": "{counter} distância restante"
+      }
+    },
+    "binary_sensor": {
+      "warning": {
+        "name": "{counter} aviso"
+      }
+    },
+    "button": {
+      "reset": {
+        "name": "{counter} concluído"
+      }
+    }
+  }
+}

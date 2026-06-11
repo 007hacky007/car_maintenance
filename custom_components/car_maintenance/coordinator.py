@@ -120,8 +120,16 @@ class VehicleCoordinator(DataUpdateCoordinator[float | None]):
         if unit not in DistanceConverter.VALID_UNITS:
             unit = "mi" if self.vehicle_unit == UNIT_MI else "km"
         km = DistanceConverter.convert(value, unit, "km")
+        ir.async_delete_issue(
+            self.hass, DOMAIN, f"odometer_missing_{self.entry.entry_id}"
+        )
         self.async_set_updated_data(km)
         self._store.async_delay_save(lambda: {"odometer_km": km}, SAVE_DELAY)
+
+    async def async_flush(self) -> None:
+        """Persist the current reading immediately, cancelling delayed saves."""
+        if self.data is not None:
+            await self._store.async_save({"odometer_km": self.data})
 
     @callback
     def _midnight_tick(self, _now) -> None:

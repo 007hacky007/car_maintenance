@@ -1,5 +1,6 @@
 """Tests for integration setup and the vehicle coordinator."""
 
+import os
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntryState
@@ -118,3 +119,33 @@ async def test_present_odometer_entity_clears_repair_issue(
         DOMAIN, f"odometer_missing_{entry.entry_id}"
     )
     assert issue is None
+
+
+async def test_entity_appearing_after_startup_clears_repair_issue(
+    hass: HomeAssistant,
+) -> None:
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    await _setup(hass, entry)
+    issue_id = f"odometer_missing_{entry.entry_id}"
+    assert ir.async_get(hass).async_get_issue(DOMAIN, issue_id) is not None
+
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    await hass.async_block_till_done()
+    assert ir.async_get(hass).async_get_issue(DOMAIN, issue_id) is None
+    assert entry.runtime_data.data == 12000.0
+
+
+async def test_remove_entry_deletes_persisted_reading(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    await _setup(hass, entry)
+
+    store_path = hass.config.path(
+        ".storage", f"{DOMAIN}.{entry.entry_id}"
+    )
+    await hass.config_entries.async_remove(entry.entry_id)
+    await hass.async_block_till_done()
+
+    assert not os.path.exists(store_path)

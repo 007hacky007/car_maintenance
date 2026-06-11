@@ -15,7 +15,7 @@ tires and any custom counter.
 - A "done" button per counter resets it to today at the current odometer
   reading.
 - Warning binary sensor per counter for automations (default threshold 90 %).
-- Localized in en, cs, de, es, fr, it, nl, pl, pt-BR and ru; entity names and
+- Localized in en, cs, de, es, fr, it, nl, pl and pt-BR; entity names and
   counter templates follow the Home Assistant UI language.
 
 Requires Home Assistant 2025.3 or newer.

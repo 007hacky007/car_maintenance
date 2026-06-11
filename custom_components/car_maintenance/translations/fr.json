@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Compteurs d'entretien",
-        "description": "Ajoutez dès maintenant un ou plusieurs compteurs d'entretien au véhicule, ou terminez et ajoutez-les plus tard.",
+        "description": "Ajoutez un ou plusieurs compteurs d'entretien au véhicule maintenant, ou terminez la configuration et ajoutez-les plus tard.\n\nDéjà ajoutés : {counters}",
         "menu_options": {
           "add_counter": "Ajouter un compteur",
           "finish": "Terminer la configuration"
@@ -57,6 +57,10 @@
           "time_value": "Laissez vide pour un compteur basé uniquement sur la distance.",
           "km_interval": "Laissez vide pour un compteur basé uniquement sur le temps. Saisi dans l'unité de distance du véhicule."
         }
+      },
+      "finish": {
+        "title": "Configuration terminée",
+        "description": "Le véhicule sera créé avec ces compteurs : {counters}\n\nVous pouvez ajouter d'autres compteurs ou un autre véhicule à tout moment dans Paramètres > Appareils et services > Car Maintenance."
       }
     },
     "error": {

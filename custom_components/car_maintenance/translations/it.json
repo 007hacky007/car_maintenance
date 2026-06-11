@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Contatori di manutenzione",
-        "description": "Aggiungi ora uno o più contatori di manutenzione al veicolo, oppure concludi e aggiungili in seguito.",
+        "description": "Aggiungi ora uno o più contatori di manutenzione al veicolo, oppure completa la configurazione e aggiungili in seguito.\n\nGià aggiunti: {counters}",
         "menu_options": {
           "add_counter": "Aggiungi un contatore",
           "finish": "Completa la configurazione"
@@ -57,6 +57,10 @@
           "time_value": "Lascia vuoto per un contatore basato solo sulla distanza.",
           "km_interval": "Lascia vuoto per un contatore basato solo sul tempo. Da inserire nell'unità di distanza del veicolo."
         }
+      },
+      "finish": {
+        "title": "Configurazione completata",
+        "description": "Il veicolo verrà creato con questi contatori: {counters}\n\nPuoi aggiungere altri contatori o un altro veicolo in qualsiasi momento in Impostazioni > Dispositivi e servizi > Car Maintenance."
       }
     },
     "error": {

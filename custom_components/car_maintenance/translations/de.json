@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Wartungszähler",
-        "description": "Fügen Sie dem Fahrzeug jetzt einen oder mehrere Wartungszähler hinzu, oder schließen Sie die Einrichtung ab und fügen Sie sie später hinzu.",
+        "description": "Fügen Sie dem Fahrzeug jetzt einen oder mehrere Wartungszähler hinzu, oder schließen Sie die Einrichtung ab und fügen Sie sie später hinzu.\n\nBisher hinzugefügt: {counters}",
         "menu_options": {
           "add_counter": "Zähler hinzufügen",
           "finish": "Einrichtung abschließen"
@@ -57,6 +57,10 @@
           "time_value": "Leer lassen für einen rein entfernungsbasierten Zähler.",
           "km_interval": "Leer lassen für einen rein zeitbasierten Zähler. Eingabe in der Entfernungseinheit des Fahrzeugs."
         }
+      },
+      "finish": {
+        "title": "Einrichtung abgeschlossen",
+        "description": "Das Fahrzeug wird mit diesen Zählern erstellt: {counters}\n\nWeitere Zähler oder ein weiteres Fahrzeug können Sie jederzeit unter Einstellungen > Geräte & Dienste > Car Maintenance hinzufügen."
       }
     },
     "error": {

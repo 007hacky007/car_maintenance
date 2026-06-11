@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Počítadla údržby",
-        "description": "Přidejte vozidlu jedno nebo více počítadel údržby hned, nebo dokončete nastavení a přidejte je později.",
+        "description": "Přidejte vozidlu jedno nebo více počítadel údržby hned, nebo dokončete nastavení a přidejte je později.\n\nZatím přidáno: {counters}",
         "menu_options": {
           "add_counter": "Přidat počítadlo",
           "finish": "Dokončit nastavení"
@@ -57,6 +57,10 @@
           "time_value": "Nechte prázdné pro počítadlo jen podle vzdálenosti.",
           "km_interval": "Nechte prázdné pro počítadlo jen podle času. Zadává se v jednotce vozidla."
         }
+      },
+      "finish": {
+        "title": "Nastavení dokončeno",
+        "description": "Vozidlo bude vytvořeno s těmito počítadly: {counters}\n\nDalší počítadla nebo další vozidlo můžete kdykoli přidat v Nastavení > Zařízení a služby > Car Maintenance (Přidat počítadlo / Přidat záznam)."
       }
     },
     "error": {

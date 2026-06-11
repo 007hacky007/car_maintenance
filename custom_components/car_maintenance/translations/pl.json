@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Liczniki przeglądów",
-        "description": "Dodaj teraz jeden lub więcej liczników przeglądów do pojazdu albo zakończ i dodaj je później.",
+        "description": "Dodaj teraz jeden lub więcej liczników konserwacji do pojazdu albo zakończ konfigurację i dodaj je później.\n\nDotychczas dodane: {counters}",
         "menu_options": {
           "add_counter": "Dodaj licznik",
           "finish": "Zakończ konfigurację"
@@ -57,6 +57,10 @@
           "time_value": "Pozostaw puste dla licznika tylko według przebiegu.",
           "km_interval": "Pozostaw puste dla licznika tylko według czasu. Podawany w jednostce odległości pojazdu."
         }
+      },
+      "finish": {
+        "title": "Konfiguracja zakończona",
+        "description": "Pojazd zostanie utworzony z tymi licznikami: {counters}\n\nWięcej liczników lub kolejny pojazd możesz dodać w dowolnym momencie w Ustawienia > Urządzenia i usługi > Car Maintenance."
       }
     },
     "error": {

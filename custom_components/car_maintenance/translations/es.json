@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Contadores de mantenimiento",
-        "description": "Añada ahora uno o más contadores de mantenimiento al vehículo, o finalice y añádalos más tarde.",
+        "description": "Añada ahora uno o más contadores de mantenimiento al vehículo, o finalice la configuración y añádalos más tarde.\n\nAñadidos hasta ahora: {counters}",
         "menu_options": {
           "add_counter": "Añadir un contador",
           "finish": "Finalizar configuración"
@@ -57,6 +57,10 @@
           "time_value": "Déjelo vacío para un contador solo por distancia.",
           "km_interval": "Déjelo vacío para un contador solo por tiempo. Se introduce en la unidad de distancia del vehículo."
         }
+      },
+      "finish": {
+        "title": "Configuración completada",
+        "description": "El vehículo se creará con estos contadores: {counters}\n\nPuede añadir más contadores u otro vehículo en cualquier momento en Ajustes > Dispositivos y servicios > Car Maintenance."
       }
     },
     "error": {

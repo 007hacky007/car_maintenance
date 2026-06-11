@@ -34,9 +34,14 @@ VEHICLE_INPUT = {
 
 
 async def _finish(hass: HomeAssistant, result):
-    """Select 'finish' in the counters menu."""
-    return await hass.config_entries.flow.async_configure(
+    """Select 'finish' in the counters menu and pass the summary page."""
+    result = await hass.config_entries.flow.async_configure(
         result["flow_id"], {"next_step_id": "finish"}
+    )
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "finish"
+    return await hass.config_entries.flow.async_configure(
+        result["flow_id"], {}
     )
 
 
@@ -59,6 +64,7 @@ async def test_user_flow_with_odometer(hass: HomeAssistant) -> None:
     )
     assert result["type"] is FlowResultType.MENU
     assert result["step_id"] == "counters_menu"
+    assert result["description_placeholders"]["counters"] == "-"
 
     result = await _finish(hass, result)
     assert result["type"] is FlowResultType.CREATE_ENTRY
@@ -124,6 +130,11 @@ async def test_user_flow_adds_counters_during_setup(
         },
     )
     assert result["type"] is FlowResultType.MENU
+    # the menu lists what was already added
+    assert (
+        result["description_placeholders"]["counters"]
+        == "Service inspection"
+    )
 
     # second counter, time only
     result = await hass.config_entries.flow.async_configure(
@@ -143,8 +154,24 @@ async def test_user_flow_adds_counters_during_setup(
         },
     )
     assert result["type"] is FlowResultType.MENU
+    assert (
+        result["description_placeholders"]["counters"]
+        == "Service inspection, STK"
+    )
 
-    result = await _finish(hass, result)
+    # the summary page lists the counters as well
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {"next_step_id": "finish"}
+    )
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "finish"
+    assert (
+        result["description_placeholders"]["counters"]
+        == "Service inspection, STK"
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {}
+    )
     assert result["type"] is FlowResultType.CREATE_ENTRY
     entry = result["result"]
     subentries = list(entry.subentries.values())

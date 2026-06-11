@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Maintenance counters",
-        "description": "Add one or more maintenance counters to the vehicle now, or finish and add them later.",
+        "description": "Add one or more maintenance counters to the vehicle now, or finish and add them later.\n\nAdded so far: {counters}",
         "menu_options": {
           "add_counter": "Add a counter",
           "finish": "Finish setup"
@@ -57,6 +57,10 @@
           "time_value": "Leave empty for a distance-only counter.",
           "km_interval": "Leave empty for a time-only counter. Entered in the vehicle's distance unit."
         }
+      },
+      "finish": {
+        "title": "Setup complete",
+        "description": "The vehicle will be created with these counters: {counters}\n\nYou can add more counters or another vehicle anytime in Settings > Devices & services > Car Maintenance (Add counter / Add entry)."
       }
     },
     "error": {

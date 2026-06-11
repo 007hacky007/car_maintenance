@@ -432,6 +432,10 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
+    def _counter_titles(self) -> str:
+        """Comma separated titles of counters added so far."""
+        return ", ".join(s["title"] for s in self._subentries) or "-"
+
     async def async_step_counters_menu(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
@@ -439,6 +443,7 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
         return self.async_show_menu(
             step_id="counters_menu",
             menu_options=["add_counter", "finish"],
+            description_placeholders={"counters": self._counter_titles()},
         )
 
     async def async_step_add_counter(
@@ -491,7 +496,15 @@ class CarMaintenanceConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_finish(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Create the vehicle entry with the collected counters."""
+        """Show a summary page, then create the vehicle entry."""
+        if user_input is None:
+            return self.async_show_form(
+                step_id="finish",
+                data_schema=vol.Schema({}),
+                description_placeholders={
+                    "counters": self._counter_titles()
+                },
+            )
         return self.async_create_entry(
             title=self._vehicle_input[CONF_NAME],
             data={

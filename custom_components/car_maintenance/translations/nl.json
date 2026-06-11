@@ -30,7 +30,7 @@
       },
       "counters_menu": {
         "title": "Onderhoudstellers",
-        "description": "Voeg nu een of meer onderhoudstellers toe aan het voertuig, of rond af en voeg ze later toe.",
+        "description": "Voeg nu een of meer onderhoudstellers toe aan het voertuig, of rond de installatie af en voeg ze later toe.\n\nTot nu toe toegevoegd: {counters}",
         "menu_options": {
           "add_counter": "Teller toevoegen",
           "finish": "Installatie voltooien"
@@ -57,6 +57,10 @@
           "time_value": "Laat leeg voor een teller op basis van alleen afstand.",
           "km_interval": "Laat leeg voor een teller op basis van alleen tijd. In te voeren in de afstandseenheid van het voertuig."
         }
+      },
+      "finish": {
+        "title": "Installatie voltooid",
+        "description": "Het voertuig wordt aangemaakt met deze tellers: {counters}\n\nJe kunt op elk moment meer tellers of een ander voertuig toevoegen via Instellingen > Apparaten en diensten > Car Maintenance."
       }
     },
     "error": {

@@ -1,7 +1,7 @@
 {
   "domain": "car_maintenance",
   "name": "Car Maintenance",
-  "codeowners": [],
+  "codeowners": ["@007hacky007"],
   "config_flow": true,
   "documentation": "https://github.com/007hacky007/car_maintenance",
   "integration_type": "hub",

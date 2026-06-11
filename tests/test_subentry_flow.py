@@ -18,7 +18,7 @@ from custom_components.car_maintenance.const import (
     UNIT_MI,
 )
 
-from .conftest import ODOMETER_ENTITY, make_vehicle_entry
+from .conftest import ODOMETER_ENTITY, make_counter_subentry, make_vehicle_entry
 
 
 async def _setup_entry(hass: HomeAssistant, entry) -> None:
@@ -157,3 +157,57 @@ async def test_km_values_entered_in_miles_are_stored_as_km(
     subentry = next(iter(entry.subentries.values()))
     assert round(subentry.data[CONF_KM_INTERVAL], 1) == 160.9
     assert round(subentry.data[CONF_LAST_ODOMETER], 1) == 80.5
+
+
+async def test_reconfigure_counter_updates_values(
+    hass: HomeAssistant,
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    await _setup_entry(hass, entry)
+    subentry = next(iter(entry.subentries.values()))
+
+    result = await entry.start_subentry_reconfigure_flow(
+        hass, subentry.subentry_id
+    )
+    assert result["step_id"] == "reconfigure"
+
+    result = await hass.config_entries.subentries.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Service inspection",
+            CONF_TIME_VALUE: 1,
+            CONF_TIME_UNIT: "years",
+            CONF_KM_INTERVAL: 20000,
+            CONF_LAST_DATE: "2026-03-01",
+            CONF_LAST_ODOMETER: 11000,
+            CONF_THRESHOLD: 80,
+        },
+    )
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "reconfigure_successful"
+    subentry = next(iter(entry.subentries.values()))
+    assert subentry.data[CONF_KM_INTERVAL] == 20000
+    assert subentry.data[CONF_LAST_DATE] == "2026-03-01"
+    assert subentry.data[CONF_THRESHOLD] == 80
+
+
+async def test_reconfigure_counter_validates(hass: HomeAssistant) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry(subentries=[make_counter_subentry()])
+    await _setup_entry(hass, entry)
+    subentry = next(iter(entry.subentries.values()))
+
+    result = await entry.start_subentry_reconfigure_flow(
+        hass, subentry.subentry_id
+    )
+    result = await hass.config_entries.subentries.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Service inspection",
+            CONF_LAST_DATE: "2026-03-01",
+            CONF_THRESHOLD: 80,
+        },
+    )
+    assert result["type"] is FlowResultType.FORM
+    assert result["errors"] == {"base": "no_interval"}

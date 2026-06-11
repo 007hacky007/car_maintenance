@@ -270,6 +270,45 @@ class CounterSubentryFlow(ConfigSubentryFlow):
             errors=errors,
         )
 
+    async def async_step_reconfigure(
+        self, user_input: dict[str, Any] | None = None
+    ) -> SubentryFlowResult:
+        """Reconfigure an existing counter."""
+        subentry = self._get_reconfigure_subentry()
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            errors = _validate_counter(user_input)
+            if not errors:
+                return self.async_update_and_abort(
+                    self._vehicle,
+                    subentry,
+                    title=user_input[CONF_NAME],
+                    data=self._counter_data(user_input),
+                )
+            defaults = dict(user_input)
+        else:
+            data = subentry.data
+            defaults = {
+                CONF_NAME: subentry.title,
+                CONF_TIME_VALUE: data.get(CONF_TIME_VALUE),
+                CONF_TIME_UNIT: data.get(CONF_TIME_UNIT) or TIME_UNIT_YEARS,
+                CONF_KM_INTERVAL: _from_km(
+                    data.get(CONF_KM_INTERVAL), self._unit
+                ),
+                CONF_LAST_DATE: data[CONF_LAST_DATE],
+                CONF_LAST_ODOMETER: _from_km(
+                    data.get(CONF_LAST_ODOMETER), self._unit
+                ),
+                CONF_THRESHOLD: data[CONF_THRESHOLD],
+            }
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=_counter_schema(
+                has_odometer=self._has_odometer, defaults=defaults
+            ),
+            errors=errors,
+        )
+
     def _current_odometer(self) -> float | None:
         """Current odometer reading in the vehicle unit, for prefills."""
         coordinator = getattr(self._vehicle, "runtime_data", None)

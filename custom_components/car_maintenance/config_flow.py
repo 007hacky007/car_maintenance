@@ -106,6 +106,9 @@ def _to_km(value: float | None, unit: str) -> float | None:
 
 
 def _from_km(value: float | None, unit: str) -> float | None:
+    # Display rounding to 0.1 mi: values entered in miles round-trip exactly
+    # (the stored km is the product of a 0.1-precision mi value), so a no-op
+    # reconfigure is stable; only km-canonical defaults shift once by < 0.2 km.
     if value is None:
         return None
     if unit == UNIT_MI:

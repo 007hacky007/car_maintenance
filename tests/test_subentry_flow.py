@@ -211,3 +211,45 @@ async def test_reconfigure_counter_validates(hass: HomeAssistant) -> None:
     )
     assert result["type"] is FlowResultType.FORM
     assert result["errors"] == {"base": "no_interval"}
+
+
+async def test_mile_values_roundtrip_through_reconfigure(
+    hass: HomeAssistant,
+) -> None:
+    """A no-op reconfigure on a mi vehicle must not change stored km."""
+    hass.states.async_set(ODOMETER_ENTITY, "10000")
+    entry = make_vehicle_entry(unit=UNIT_MI)
+    await _setup_entry(hass, entry)
+
+    result = await _start_details(hass, entry, "custom")
+    result = await hass.config_entries.subentries.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Miles counter",
+            CONF_KM_INTERVAL: 100,
+            CONF_LAST_DATE: "2026-01-01",
+            CONF_LAST_ODOMETER: 50,
+            CONF_THRESHOLD: 90,
+        },
+    )
+    subentry = next(iter(entry.subentries.values()))
+    stored_interval = subentry.data[CONF_KM_INTERVAL]
+    stored_odometer = subentry.data[CONF_LAST_ODOMETER]
+
+    result = await entry.start_subentry_reconfigure_flow(
+        hass, subentry.subentry_id
+    )
+    result = await hass.config_entries.subentries.async_configure(
+        result["flow_id"],
+        {
+            CONF_NAME: "Miles counter",
+            CONF_KM_INTERVAL: 100,
+            CONF_LAST_DATE: "2026-01-01",
+            CONF_LAST_ODOMETER: 50,
+            CONF_THRESHOLD: 90,
+        },
+    )
+    assert result["type"] is FlowResultType.ABORT
+    subentry = next(iter(entry.subentries.values()))
+    assert subentry.data[CONF_KM_INTERVAL] == stored_interval
+    assert subentry.data[CONF_LAST_ODOMETER] == stored_odometer

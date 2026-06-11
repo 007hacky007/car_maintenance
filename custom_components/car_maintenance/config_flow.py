@@ -188,7 +188,8 @@ def _validate_counter(user_input: dict[str, Any]) -> dict[str, str]:
         CONF_KM_INTERVAL
     ):
         errors["base"] = "no_interval"
-    if date.fromisoformat(user_input[CONF_LAST_DATE]) > dt_util.now().date():
+    last_date = user_input.get(CONF_LAST_DATE)
+    if last_date and date.fromisoformat(last_date) > dt_util.now().date():
         errors[CONF_LAST_DATE] = "future_date"
     return errors
 

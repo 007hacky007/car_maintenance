@@ -3,8 +3,8 @@
 <img src="assets/icon.png" alt="Car Maintenance icon" width="128" align="right"/>
 
 Track vehicle maintenance with progress sensors: service inspections by time
-and/or driven distance, vehicle inspection (STK), highway vignette, oil, brakes,
-tires and any custom counter.
+and/or driven distance, periodic vehicle inspection, highway vignette, oil,
+brakes, tires and any custom counter.
 
 - One integration entry per vehicle, any number of counters per vehicle.
 - Counters track a time interval, a distance interval, or both; progress is
@@ -20,6 +20,8 @@ tires and any custom counter.
 - Bundled integration icon (shown by Home Assistant 2026.3 or newer).
 
 Requires Home Assistant 2025.3 or newer.
+
+![Counters on a dashboard](assets/dashboard.png)
 
 ## Installation (HACS)
 
@@ -63,7 +65,7 @@ Horizontal progress bars work great with
 
 ```yaml
 type: custom:entity-progress-card
-entity: sensor.octavia_service_inspection_progress
+entity: sensor.toyota_service_inspection_progress
 name: Service inspection
 icon: mdi:car-wrench
 bar_color: var(--state-icon-color)
@@ -75,13 +77,13 @@ Overview of all counters of a vehicle:
 type: vertical-stack
 cards:
   - type: custom:entity-progress-card
-    entity: sensor.octavia_service_inspection_progress
+    entity: sensor.toyota_service_inspection_progress
     name: Service
   - type: custom:entity-progress-card
-    entity: sensor.octavia_vehicle_inspection_progress
-    name: STK
+    entity: sensor.toyota_vehicle_inspection_progress
+    name: Inspection
   - type: custom:entity-progress-card
-    entity: sensor.octavia_highway_vignette_progress
+    entity: sensor.toyota_highway_vignette_progress
     name: Vignette
 ```
 
@@ -90,15 +92,15 @@ Notification automation example:
 ```yaml
 triggers:
   - trigger: state
-    entity_id: binary_sensor.octavia_service_inspection_warning
+    entity_id: binary_sensor.toyota_service_inspection_warning
     to: "on"
 actions:
   - action: notify.mobile_app_phone
     data:
       message: >-
         Service inspection due soon:
-        {{ states('sensor.octavia_service_inspection_remaining_days') }} days
-        or {{ states('sensor.octavia_service_inspection_remaining_distance') }} km left.
+        {{ states('sensor.toyota_service_inspection_remaining_days') }} days
+        or {{ states('sensor.toyota_service_inspection_remaining_distance') }} km left.
 ```
 
 ## License

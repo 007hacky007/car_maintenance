@@ -147,3 +147,17 @@ async def test_odometer_update_refreshes_sensors(
     # km: 14000/15000 = 93.3 % now limits over time 44.1 %
     assert progress.state == "93.3"
     assert progress.attributes["limiting_factor"] == "km"
+
+
+async def test_remaining_direction_floors_at_zero_when_overdue(
+    hass: HomeAssistant, frozen_time
+) -> None:
+    hass.states.async_set(ODOMETER_ENTITY, "12000")
+    entry = make_vehicle_entry(
+        direction=DIRECTION_REMAINING,
+        subentries=[make_counter_subentry(last_date="2024-01-01")],
+    )
+    sub_id = await _setup(hass, entry)
+    progress = hass.states.get(_eid(hass, entry, sub_id, "progress"))
+    assert progress.state == "0.0"
+    assert progress.attributes["remaining_percent"] < 0

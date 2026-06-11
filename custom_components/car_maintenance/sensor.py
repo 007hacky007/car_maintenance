@@ -84,6 +84,8 @@ class ProgressSensor(CounterEntity, SensorEntity):
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
+        # percent attributes are intentionally uncapped: exhausted_percent
+        # exceeds 100 and remaining_percent goes negative when overdue
         state = self.counter_state
         exhausted = state.exhausted_percent
         return {
@@ -106,6 +108,7 @@ class RemainingDaysSensor(CounterEntity, SensorEntity):
     """Days until the counter is due (negative when overdue)."""
 
     _attr_native_unit_of_measurement = UnitOfTime.DAYS
+    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_icon = "mdi:calendar-clock"
 
     def __init__(
@@ -140,6 +143,7 @@ class RemainingDistanceSensor(CounterEntity, SensorEntity):
 
     _attr_device_class = SensorDeviceClass.DISTANCE
     _attr_native_unit_of_measurement = UnitOfLength.KILOMETERS
+    _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_suggested_display_precision = 0
 
     def __init__(

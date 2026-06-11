@@ -1,0 +1,12 @@
+{
+  "domain": "car_maintenance",
+  "name": "Car Maintenance",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/REPLACE-ME/ha-car-maintenance",
+  "integration_type": "hub",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/REPLACE-ME/ha-car-maintenance/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

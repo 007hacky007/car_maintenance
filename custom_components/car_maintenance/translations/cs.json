@@ -1,0 +1,140 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pridat vozidlo",
+        "data": {
+          "name": "Nazev vozidla",
+          "odometer_entity": "Entita odometru (volitelne)",
+          "unit": "Jednotka vzdalenosti",
+          "direction": "Smer progress baru"
+        },
+        "data_description": {
+          "odometer_entity": "Senzor s celkovym najezdem. Nechte prazdne pro sledovani pouze podle casu.",
+          "direction": "Vycerpano: 0 az 100 s blizicim se terminem. Zbyva: 100 az 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Upravit vozidlo",
+        "description": "Pocitadla s km intervalem: {counters}",
+        "data": {
+          "name": "Nazev vozidla",
+          "odometer_entity": "Entita odometru (volitelne)",
+          "unit": "Jednotka vzdalenosti",
+          "direction": "Smer progress baru"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Potvrdit zmenu odometru",
+        "description": "Aktualni stav odometru: {old_reading}. Stav nove entity: {new_reading}. Ulozene hodnoty poslednich servisu zustavaji. Pocitadla s poslednim servisem nad novou hodnotou: {below_counters}"
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "Vybrana entita nema ciselnou hodnotu.",
+      "odometer_required_by_counters": "Existuji pocitadla s km intervalem. Nejprve je upravte nebo smazte."
+    },
+    "abort": {
+      "reconfigure_successful": "Vozidlo upraveno."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Pocitadlo",
+      "initiate_flow": {
+        "user": "Pridat pocitadlo"
+      },
+      "entry_type": "Pocitadlo udrzby",
+      "step": {
+        "user": {
+          "title": "Pridat pocitadlo",
+          "data": {
+            "template": "Sablona"
+          }
+        },
+        "details": {
+          "title": "Detaily pocitadla",
+          "data": {
+            "name": "Nazev",
+            "time_value": "Casovy interval",
+            "time_unit": "Jednotka casoveho intervalu",
+            "km_interval": "Interval vzdalenosti",
+            "last_date": "Datum posledniho provedeni",
+            "last_odometer": "Stav odometru pri poslednim provedeni",
+            "threshold": "Prah upozorneni (%)"
+          },
+          "data_description": {
+            "time_value": "Nechte prazdne pro pocitadlo jen podle vzdalenosti.",
+            "km_interval": "Nechte prazdne pro pocitadlo jen podle casu. Zadava se v jednotce vozidla."
+          }
+        },
+        "reconfigure": {
+          "title": "Upravit pocitadlo",
+          "data": {
+            "name": "Nazev",
+            "time_value": "Casovy interval",
+            "time_unit": "Jednotka casoveho intervalu",
+            "km_interval": "Interval vzdalenosti",
+            "last_date": "Datum posledniho provedeni",
+            "last_odometer": "Stav odometru pri poslednim provedeni",
+            "threshold": "Prah upozorneni (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Zadejte casovy interval, interval vzdalenosti, nebo oboji.",
+        "future_date": "Datum posledniho provedeni nemuze byt v budoucnosti."
+      },
+      "abort": {
+        "reconfigure_successful": "Pocitadlo upraveno."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilometry",
+        "mi": "Mile"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Vycerpano (0 az 100)",
+        "remaining": "Zbyva (100 az 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Dny",
+        "months": "Mesice",
+        "years": "Roky"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Servisni prohlidka",
+        "vehicle_inspection": "STK",
+        "vignette": "Dalnicni znamka",
+        "oil": "Vymena oleje",
+        "brake_fluid": "Brzdova kapalina",
+        "coolant": "Chladici kapalina",
+        "timing_belt": "Rozvody",
+        "battery": "Baterie",
+        "insurance": "Pojisteni",
+        "tires": "Prezuti pneumatik",
+        "first_aid_kit": "Lekarnicka",
+        "custom": "Vlastni"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "Neni k dispozici zadny stav odometru, pocitadlo nebylo resetovano."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Chybi entita odometru",
+      "description": "Entita odometru {entity_id} vozidla {vehicle} neni dostupna. Km pocitadla pouzivaji posledni znamou hodnotu. Opravte to v nastaveni vozidla."
+    }
+  }
+}

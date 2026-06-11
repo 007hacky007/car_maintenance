@@ -1,0 +1,140 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add vehicle",
+        "data": {
+          "name": "Vehicle name",
+          "odometer_entity": "Odometer entity (optional)",
+          "unit": "Distance unit",
+          "direction": "Progress bar direction"
+        },
+        "data_description": {
+          "odometer_entity": "Sensor providing the total driven distance. Leave empty to track counters by time only.",
+          "direction": "Exhausted: 0 to 100 as the deadline approaches. Remaining: 100 to 0."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure vehicle",
+        "description": "Counters using a distance interval: {counters}",
+        "data": {
+          "name": "Vehicle name",
+          "odometer_entity": "Odometer entity (optional)",
+          "unit": "Distance unit",
+          "direction": "Progress bar direction"
+        }
+      },
+      "confirm_odometer": {
+        "title": "Confirm odometer change",
+        "description": "Current odometer reading: {old_reading}. New entity reading: {new_reading}. Stored values at last service are kept. Counters with a last service reading above the new value: {below_counters}"
+      }
+    },
+    "error": {
+      "odometer_not_numeric": "The selected entity does not have a numeric state.",
+      "odometer_required_by_counters": "Counters with a distance interval exist. Edit or delete them first."
+    },
+    "abort": {
+      "reconfigure_successful": "Vehicle reconfigured."
+    }
+  },
+  "config_subentries": {
+    "counter": {
+      "title": "Counter",
+      "initiate_flow": {
+        "user": "Add counter"
+      },
+      "entry_type": "Maintenance counter",
+      "step": {
+        "user": {
+          "title": "Add counter",
+          "data": {
+            "template": "Template"
+          }
+        },
+        "details": {
+          "title": "Counter details",
+          "data": {
+            "name": "Name",
+            "time_value": "Time interval",
+            "time_unit": "Time interval unit",
+            "km_interval": "Distance interval",
+            "last_date": "Date of last service",
+            "last_odometer": "Odometer at last service",
+            "threshold": "Warning threshold (%)"
+          },
+          "data_description": {
+            "time_value": "Leave empty for a distance-only counter.",
+            "km_interval": "Leave empty for a time-only counter. Entered in the vehicle's distance unit."
+          }
+        },
+        "reconfigure": {
+          "title": "Edit counter",
+          "data": {
+            "name": "Name",
+            "time_value": "Time interval",
+            "time_unit": "Time interval unit",
+            "km_interval": "Distance interval",
+            "last_date": "Date of last service",
+            "last_odometer": "Odometer at last service",
+            "threshold": "Warning threshold (%)"
+          }
+        }
+      },
+      "error": {
+        "no_interval": "Set a time interval, a distance interval, or both.",
+        "future_date": "The date of last service cannot be in the future."
+      },
+      "abort": {
+        "reconfigure_successful": "Counter updated."
+      }
+    }
+  },
+  "selector": {
+    "unit": {
+      "options": {
+        "km": "Kilometers",
+        "mi": "Miles"
+      }
+    },
+    "direction": {
+      "options": {
+        "exhausted": "Exhausted (0 to 100)",
+        "remaining": "Remaining (100 to 0)"
+      }
+    },
+    "time_unit": {
+      "options": {
+        "days": "Days",
+        "months": "Months",
+        "years": "Years"
+      }
+    },
+    "template": {
+      "options": {
+        "service": "Service inspection",
+        "vehicle_inspection": "Vehicle inspection",
+        "vignette": "Highway vignette",
+        "oil": "Oil change",
+        "brake_fluid": "Brake fluid",
+        "coolant": "Coolant",
+        "timing_belt": "Timing belt",
+        "battery": "Battery",
+        "insurance": "Insurance",
+        "tires": "Tire change (seasonal)",
+        "first_aid_kit": "First aid kit",
+        "custom": "Custom"
+      }
+    }
+  },
+  "exceptions": {
+    "no_odometer_reading": {
+      "message": "No odometer reading is available, the counter was not reset."
+    }
+  },
+  "issues": {
+    "odometer_missing": {
+      "title": "Odometer entity missing",
+      "description": "The odometer entity {entity_id} of vehicle {vehicle} is not available. Distance-based counters keep using the last known reading. Reconfigure the vehicle to fix this."
+    }
+  }
+}

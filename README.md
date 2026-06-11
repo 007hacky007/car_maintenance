@@ -1,6 +1,4 @@
-# Car Maintenance for Home Assistant
-
-<img src="assets/icon.png" alt="Car Maintenance icon" width="128" align="right"/>
+# <img src="assets/icon.png" alt="Car Maintenance icon" width="40" align="top"/> Car Maintenance for Home Assistant
 
 Track vehicle maintenance with progress sensors: service inspections by time
 and/or driven distance, periodic vehicle inspection, highway vignette, oil,
@@ -56,6 +54,8 @@ Each counter provides:
 The progress sensor exposes `exhausted_percent`, `remaining_percent`,
 `time_percent`, `km_percent`, `limiting_factor`, `last_service_date`,
 `last_service_odometer` and `due_odometer` attributes (distances in km).
+
+<img src="assets/entities.png" alt="Counter entities on the device page" width="380"/>
 
 ## Dashboard
 

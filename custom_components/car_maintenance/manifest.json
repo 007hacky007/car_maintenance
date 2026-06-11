@@ -3,10 +3,10 @@
   "name": "Car Maintenance",
   "codeowners": [],
   "config_flow": true,
-  "documentation": "https://github.com/REPLACE-ME/ha-car-maintenance",
+  "documentation": "https://github.com/007hacky007/car_maintenance",
   "integration_type": "hub",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/REPLACE-ME/ha-car-maintenance/issues",
+  "issue_tracker": "https://github.com/007hacky007/car_maintenance/issues",
   "requirements": [],
   "version": "0.1.0"
 }

@@ -19,7 +19,12 @@ Requires Home Assistant 2025.3 or newer.
 ## Installation (HACS)
 
 1. HACS -> three-dot menu -> Custom repositories.
-2. Add this repository URL, category "Integration".
+2. Add this repository URL, category "Integration":
+
+   ```text
+   https://github.com/007hacky007/car_maintenance
+   ```
+
 3. Install "Car Maintenance" and restart Home Assistant.
 4. Settings -> Devices and services -> Add integration -> Car Maintenance.
 

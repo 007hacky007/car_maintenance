@@ -7,5 +7,4 @@ htmlcov/
 .DS_Store
 
 # local project notes, not part of the published integration
-AGENTS.md
 docs/superpowers/

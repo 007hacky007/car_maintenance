@@ -68,6 +68,8 @@ def compute(
                 )
                 driven = 0
             km_percent = driven / km_interval * 100
+            # remaining_km is relative to the interval baseline, so after a
+            # clamp it reports the full interval, not the gap to due_odometer.
             remaining_km = km_interval - driven
 
     if time_percent is None and km_percent is None:

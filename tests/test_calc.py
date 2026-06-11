@@ -103,6 +103,21 @@ def test_combined_unknown_odometer_falls_back_to_time() -> None:
     assert state.remaining_km is None
 
 
+def test_exact_tie_is_attributed_to_time() -> None:
+    # 50 % elapsed on both components: time wins the tie
+    state = _compute(
+        last_date=date(2025, 6, 11),
+        time_value=2,
+        time_unit="years",
+        last_odometer_km=0,
+        km_interval=10000,
+        odometer_km=5000,
+    )
+    assert state.time_percent == 50.0
+    assert state.km_percent == 50.0
+    assert state.limiting_factor == "time"
+
+
 def test_odometer_lower_than_last_service_clamps_to_zero() -> None:
     state = _compute(
         last_odometer_km=20000, km_interval=15000, odometer_km=100
